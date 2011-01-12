@@ -27,8 +27,10 @@ protected:
 
 private:
     Ui::MainWindow *ui;
+    void setupMatrix(int i);
 
 private slots:
+    void on_Slider_valueChanged(int value);
     void on_actionEnregistrer_l_image_triggered();
     void on_actionOuvrir_une_image_triggered();
     void on_actionQuitter_triggered();
