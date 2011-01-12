@@ -51,6 +51,19 @@
       </item>
      </layout>
     </item>
+    <item>
+     <widget class="QSlider" name="Slider">
+      <property name="maximum">
+       <number>500</number>
+      </property>
+      <property name="sliderPosition">
+       <number>250</number>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -78,7 +91,7 @@
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
-    <bool>true</bool>
+    <bool>false</bool>
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>

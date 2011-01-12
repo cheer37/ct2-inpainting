@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <math.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -35,7 +36,6 @@ void MainWindow::on_actionOuvrir_une_image_triggered()
     QString filters("Images (*.jpg *.jpeg *.png *.gif *.bmp *.tga *.tif *.tiff)");
 
     QString filename = QFileDialog::getOpenFileName(this, "Choisir l'image...", ":", filters,0, QFileDialog::HideNameFilterDetails);
-    qDebug() <<filename;
 
     this->image = new CImage(filename);
     scene = new QGraphicsScene();
@@ -58,3 +58,19 @@ void MainWindow::on_actionEnregistrer_l_image_triggered()
         img.save(Path);
     }
 }
+
+void MainWindow::on_Slider_valueChanged(int value)
+{
+    this->setupMatrix(value);
+}
+
+void MainWindow::setupMatrix(int i)
+{
+    qreal scale = ::pow(2.0, (i - 250) / 50.0);
+
+    QMatrix matrix;
+    matrix.scale(scale, scale);
+
+    ui->graphicsView_img->setMatrix(matrix);
+}
+

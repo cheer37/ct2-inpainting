@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Wed Jan 12 18:27:18 2011
+** Created: Wed Jan 12 19:00:53 2011
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -22,6 +22,7 @@
 #include <QtGui/QMenuBar>
 #include <QtGui/QPushButton>
 #include <QtGui/QRadioButton>
+#include <QtGui/QSlider>
 #include <QtGui/QStatusBar>
 #include <QtGui/QToolBar>
 #include <QtGui/QVBoxLayout>
@@ -43,6 +44,7 @@ public:
     QRadioButton *radioButton_1;
     QPushButton *pushButton_go;
     QGraphicsView *graphicsView_img;
+    QSlider *Slider;
     QMenuBar *menuBar;
     QMenu *menuMenu;
     QToolBar *mainToolBar;
@@ -98,6 +100,14 @@ public:
 
         verticalLayout_2->addLayout(horizontalLayout_3);
 
+        Slider = new QSlider(centralWidget);
+        Slider->setObjectName(QString::fromUtf8("Slider"));
+        Slider->setMaximum(500);
+        Slider->setSliderPosition(250);
+        Slider->setOrientation(Qt::Horizontal);
+
+        verticalLayout_2->addWidget(Slider);
+
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -108,7 +118,6 @@ public:
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
         MainWindow->addToolBar(Qt::TopToolBarArea, mainToolBar);
-        MainWindow->insertToolBarBreak(mainToolBar);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QString::fromUtf8("statusBar"));
         MainWindow->setStatusBar(statusBar);
