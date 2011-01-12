@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Wed Jan 12 19:00:55 2011
+** Created: Thu Jan 13 00:34:09 2011
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.2)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-       4,   14, // methods
+       9,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -31,16 +31,26 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: signature, parameters, type, tag, flags
-      18,   12,   11,   11, 0x08,
-      46,   11,   11,   11, 0x08,
-      87,   11,   11,   11, 0x08,
-     125,   11,   11,   11, 0x08,
+      12,   11,   11,   11, 0x08,
+      42,   11,   11,   11, 0x08,
+      72,   11,   11,   11, 0x08,
+     109,   11,   11,   11, 0x08,
+     143,   11,   11,   11, 0x08,
+     179,  173,   11,   11, 0x08,
+     207,   11,   11,   11, 0x08,
+     248,   11,   11,   11, 0x08,
+     286,   11,   11,   11, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_MainWindow[] = {
-    "MainWindow\0\0value\0on_Slider_valueChanged(int)\0"
+    "MainWindow\0\0on_toolButton_erase_clicked()\0"
+    "on_toolButton_write_clicked()\0"
+    "on_checkBox_masque_stateChanged(int)\0"
+    "on_spinBox_size_valueChanged(int)\0"
+    "on_pushButton_clear_clicked()\0value\0"
+    "on_Slider_valueChanged(int)\0"
     "on_actionEnregistrer_l_image_triggered()\0"
     "on_actionOuvrir_une_image_triggered()\0"
     "on_actionQuitter_triggered()\0"
@@ -75,13 +85,18 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: on_Slider_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 1: on_actionEnregistrer_l_image_triggered(); break;
-        case 2: on_actionOuvrir_une_image_triggered(); break;
-        case 3: on_actionQuitter_triggered(); break;
+        case 0: on_toolButton_erase_clicked(); break;
+        case 1: on_toolButton_write_clicked(); break;
+        case 2: on_checkBox_masque_stateChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 3: on_spinBox_size_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 4: on_pushButton_clear_clicked(); break;
+        case 5: on_Slider_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 6: on_actionEnregistrer_l_image_triggered(); break;
+        case 7: on_actionOuvrir_une_image_triggered(); break;
+        case 8: on_actionQuitter_triggered(); break;
         default: ;
         }
-        _id -= 4;
+        _id -= 9;
     }
     return _id;
 }

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Wed Jan 12 19:00:53 2011
+** Created: Thu Jan 13 00:32:12 2011
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -14,7 +14,9 @@
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
+#include <QtGui/QCheckBox>
 #include <QtGui/QGraphicsView>
+#include <QtGui/QGridLayout>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QMainWindow>
@@ -23,8 +25,10 @@
 #include <QtGui/QPushButton>
 #include <QtGui/QRadioButton>
 #include <QtGui/QSlider>
+#include <QtGui/QSpinBox>
 #include <QtGui/QStatusBar>
 #include <QtGui/QToolBar>
+#include <QtGui/QToolButton>
 #include <QtGui/QVBoxLayout>
 #include <QtGui/QWidget>
 
@@ -39,9 +43,16 @@ public:
     QWidget *centralWidget;
     QVBoxLayout *verticalLayout_2;
     QHBoxLayout *horizontalLayout_3;
+    QWidget *widget;
     QVBoxLayout *verticalLayout;
-    QRadioButton *radioButton_2;
+    QGridLayout *gridLayout;
+    QToolButton *toolButton_write;
+    QSpinBox *spinBox_size;
+    QToolButton *toolButton_erase;
+    QPushButton *pushButton_clear;
+    QCheckBox *checkBox_masque;
     QRadioButton *radioButton_1;
+    QRadioButton *radioButton_2;
     QPushButton *pushButton_go;
     QGraphicsView *graphicsView_img;
     QSlider *Slider;
@@ -54,7 +65,8 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(723, 482);
+        MainWindow->resize(900, 600);
+        MainWindow->setMinimumSize(QSize(900, 600));
         actionOuvrir_une_image = new QAction(MainWindow);
         actionOuvrir_une_image->setObjectName(QString::fromUtf8("actionOuvrir_une_image"));
         actionEnregistrer_l_image = new QAction(MainWindow);
@@ -70,26 +82,65 @@ public:
         horizontalLayout_3 = new QHBoxLayout();
         horizontalLayout_3->setSpacing(6);
         horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
-        verticalLayout = new QVBoxLayout();
+        widget = new QWidget(centralWidget);
+        widget->setObjectName(QString::fromUtf8("widget"));
+        verticalLayout = new QVBoxLayout(widget);
         verticalLayout->setSpacing(6);
+        verticalLayout->setContentsMargins(11, 11, 11, 11);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        radioButton_2 = new QRadioButton(centralWidget);
+        gridLayout = new QGridLayout();
+        gridLayout->setSpacing(6);
+        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
+        toolButton_write = new QToolButton(widget);
+        toolButton_write->setObjectName(QString::fromUtf8("toolButton_write"));
+
+        gridLayout->addWidget(toolButton_write, 1, 0, 1, 1);
+
+        spinBox_size = new QSpinBox(widget);
+        spinBox_size->setObjectName(QString::fromUtf8("spinBox_size"));
+        spinBox_size->setMinimum(1);
+        spinBox_size->setMaximum(5);
+        spinBox_size->setValue(3);
+
+        gridLayout->addWidget(spinBox_size, 1, 1, 1, 1);
+
+        toolButton_erase = new QToolButton(widget);
+        toolButton_erase->setObjectName(QString::fromUtf8("toolButton_erase"));
+
+        gridLayout->addWidget(toolButton_erase, 2, 0, 1, 1);
+
+        pushButton_clear = new QPushButton(widget);
+        pushButton_clear->setObjectName(QString::fromUtf8("pushButton_clear"));
+
+        gridLayout->addWidget(pushButton_clear, 3, 0, 1, 1);
+
+        checkBox_masque = new QCheckBox(widget);
+        checkBox_masque->setObjectName(QString::fromUtf8("checkBox_masque"));
+        checkBox_masque->setChecked(true);
+
+        gridLayout->addWidget(checkBox_masque, 0, 0, 1, 1);
+
+
+        verticalLayout->addLayout(gridLayout);
+
+        radioButton_1 = new QRadioButton(widget);
+        radioButton_1->setObjectName(QString::fromUtf8("radioButton_1"));
+        radioButton_1->setChecked(true);
+
+        verticalLayout->addWidget(radioButton_1);
+
+        radioButton_2 = new QRadioButton(widget);
         radioButton_2->setObjectName(QString::fromUtf8("radioButton_2"));
 
         verticalLayout->addWidget(radioButton_2);
 
-        radioButton_1 = new QRadioButton(centralWidget);
-        radioButton_1->setObjectName(QString::fromUtf8("radioButton_1"));
-
-        verticalLayout->addWidget(radioButton_1);
-
-        pushButton_go = new QPushButton(centralWidget);
+        pushButton_go = new QPushButton(widget);
         pushButton_go->setObjectName(QString::fromUtf8("pushButton_go"));
 
         verticalLayout->addWidget(pushButton_go);
 
 
-        horizontalLayout_3->addLayout(verticalLayout);
+        horizontalLayout_3->addWidget(widget);
 
         graphicsView_img = new QGraphicsView(centralWidget);
         graphicsView_img->setObjectName(QString::fromUtf8("graphicsView_img"));
@@ -111,7 +162,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 723, 23));
+        menuBar->setGeometry(QRect(0, 0, 900, 23));
         menuMenu = new QMenu(menuBar);
         menuMenu->setObjectName(QString::fromUtf8("menuMenu"));
         MainWindow->setMenuBar(menuBar);
@@ -142,8 +193,12 @@ public:
         actionEnregistrer_l_image->setShortcut(QApplication::translate("MainWindow", "Ctrl+S", 0, QApplication::UnicodeUTF8));
         actionQuitter->setText(QApplication::translate("MainWindow", "Quitter.", 0, QApplication::UnicodeUTF8));
         actionQuitter->setShortcut(QApplication::translate("MainWindow", "Ctrl+Q", 0, QApplication::UnicodeUTF8));
-        radioButton_2->setText(QApplication::translate("MainWindow", "Methode 2", 0, QApplication::UnicodeUTF8));
+        toolButton_write->setText(QApplication::translate("MainWindow", "Pinceau", 0, QApplication::UnicodeUTF8));
+        toolButton_erase->setText(QApplication::translate("MainWindow", "Gomme", 0, QApplication::UnicodeUTF8));
+        pushButton_clear->setText(QApplication::translate("MainWindow", "Effacer masque", 0, QApplication::UnicodeUTF8));
+        checkBox_masque->setText(QApplication::translate("MainWindow", "Afficher masque", 0, QApplication::UnicodeUTF8));
         radioButton_1->setText(QApplication::translate("MainWindow", "Methode 1", 0, QApplication::UnicodeUTF8));
+        radioButton_2->setText(QApplication::translate("MainWindow", "Methode 2", 0, QApplication::UnicodeUTF8));
         pushButton_go->setText(QApplication::translate("MainWindow", "Go", 0, QApplication::UnicodeUTF8));
         menuMenu->setTitle(QApplication::translate("MainWindow", "Menu", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
