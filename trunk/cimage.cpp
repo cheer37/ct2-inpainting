@@ -66,7 +66,7 @@ void CImage::mouseMoveEvent (QGraphicsSceneMouseEvent * event)
         {
             for (int i = -this->pen_size; i < this->pen_size; ++i)
                 for(int j = -this->pen_size; j < this->pen_size; ++j) {
-                    if ((pt.x()-i >= 0 && pt.x()+i < this->image->width() && pt.y()-j >= 0 && pt.y()+j < this->image->height()))
+                    if ((pt.x()+i >= 0 && pt.x()+i < this->image->width() && pt.y()+j >= 0 && pt.y()+j < this->image->height()))
                         this->image->setPixel(pt.x()+i, pt.y()+j, qRgba(0, 0, 0, 255));
                 }
         }
@@ -74,7 +74,7 @@ void CImage::mouseMoveEvent (QGraphicsSceneMouseEvent * event)
         {
             for (int i = -this->pen_size; i < this->pen_size; ++i)
                 for(int j = -this->pen_size; j < this->pen_size; ++j) {
-                    if ((pt.x()-i >= 0 && pt.x()+i < this->image->width() && pt.y()-j >= 0 && pt.y()+j < this->image->height()))
+                    if ((pt.x()+i >= 0 && pt.x()+i < this->image->width() && pt.y()+j >= 0 && pt.y()+j < this->image->height()))
                         this->image->setPixel(pt.x()+i, pt.y()+j, qRgba(255, 255, 255, 0));
                 }
         }
@@ -106,4 +106,9 @@ void CImage::setPixel(int x, int y, QRgb c)
 QRgb CImage::getPixel(int x, int y)
 {
     return this->image->pixel(x, y);
+}
+
+void CImage::save(QString path)
+{
+    this->image->save(path);
 }
