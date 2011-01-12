@@ -7,6 +7,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    this->masque = 0;
 }
 
 MainWindow::~MainWindow()
@@ -39,7 +40,11 @@ void MainWindow::on_actionOuvrir_une_image_triggered()
 
     this->image = new CImage(filename);
     scene = new QGraphicsScene();
-    scene->addItem(image);
+    scene->addItem(this->image);
+    this->masque = new CImage(this->image->width(), this->image->height(), 1);
+    scene->addItem(this->masque);
+    this->masque->set_pen_size(ui->spinBox_size->value());
+    this->masque->set_pen_mode(1);
     ui->graphicsView_img->setScene(scene);
 }
 
@@ -70,7 +75,46 @@ void MainWindow::setupMatrix(int i)
 
     QMatrix matrix;
     matrix.scale(scale, scale);
-
     ui->graphicsView_img->setMatrix(matrix);
 }
 
+
+void MainWindow::on_pushButton_clear_clicked()
+{
+    if (this->masque != 0)
+    {
+        this->masque->Clear_img();
+    }
+}
+
+void MainWindow::on_spinBox_size_valueChanged(int s)
+{
+    this->masque->set_pen_size(s);
+}
+
+void MainWindow::on_checkBox_masque_stateChanged(int a)
+{
+    if (this->masque != 0)
+    {
+        if (a)
+            scene->addItem(this->masque);
+        else
+            scene->removeItem(this->masque);
+    }
+}
+
+void MainWindow::on_toolButton_write_clicked()
+{
+    if (this->masque != 0)
+    {
+        this->masque->set_pen_mode(1);
+    }
+}
+
+void MainWindow::on_toolButton_erase_clicked()
+{
+    if (this->masque != 0)
+    {
+        this->masque->set_pen_mode(0);
+    }
+}

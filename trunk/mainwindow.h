@@ -16,6 +16,7 @@ class MainWindow : public QMainWindow {
     Q_OBJECT
 public:
     CImage * image;
+    CImage * masque;
     QLabel * label_img;
     QGraphicsScene *scene;
 
@@ -30,6 +31,11 @@ private:
     void setupMatrix(int i);
 
 private slots:
+    void on_toolButton_erase_clicked();
+    void on_toolButton_write_clicked();
+    void on_checkBox_masque_stateChanged(int );
+    void on_spinBox_size_valueChanged(int );
+    void on_pushButton_clear_clicked();
     void on_Slider_valueChanged(int value);
     void on_actionEnregistrer_l_image_triggered();
     void on_actionOuvrir_une_image_triggered();
