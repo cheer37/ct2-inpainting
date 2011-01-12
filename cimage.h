@@ -24,6 +24,7 @@ class CImage : public QGraphicsItem
         void Clear_img();
         void set_pen_size(int);
         void set_pen_mode(int s);
+        void save(QString);
 
     private:
         void mousePressEvent(QGraphicsSceneMouseEvent *event);

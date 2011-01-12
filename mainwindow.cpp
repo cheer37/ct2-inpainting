@@ -55,12 +55,24 @@ void MainWindow::on_actionEnregistrer_l_image_triggered()
                                                      ":","Images (*.jpg *.jpeg *.png *.gif *.bmp *.tga *.tif *.tiff)");
     if(!Path.isNull())
     {
-        QImage img(this->scene->width(), this->scene->height(), QImage::Format_RGB32);
+        /*QImage img(this->scene->width(), this->scene->height(), QImage::Format_RGB32);
         QPainter painter;
         painter.begin(&img);
         this->scene->render(&painter);
         painter.end();
-        img.save(Path);
+        img.save(Path);*/
+        this->image->save(Path);
+    }
+}
+
+void MainWindow::on_actionEnregistrer_le_masque_triggered()
+{
+    QString Path = QFileDialog::getSaveFileName(this,
+                                                     "Choisir un dossier",
+                                                     ":","Images (*.jpg *.jpeg *.png *.gif *.bmp *.tga *.tif *.tiff)");
+    if(!Path.isNull())
+    {
+        this->masque->save(Path);
     }
 }
 
@@ -89,7 +101,10 @@ void MainWindow::on_pushButton_clear_clicked()
 
 void MainWindow::on_spinBox_size_valueChanged(int s)
 {
-    this->masque->set_pen_size(s);
+    if (this->masque != 0)
+    {
+        this->masque->set_pen_size(s);
+    }
 }
 
 void MainWindow::on_checkBox_masque_stateChanged(int a)

@@ -31,6 +31,7 @@ private:
     void setupMatrix(int i);
 
 private slots:
+    void on_actionEnregistrer_le_masque_triggered();
     void on_toolButton_erase_clicked();
     void on_toolButton_write_clicked();
     void on_checkBox_masque_stateChanged(int );
