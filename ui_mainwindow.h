@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Thu Jan 13 10:57:51 2011
+** Created: Thu Jan 13 12:51:38 2011
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -55,6 +55,7 @@ public:
     QRadioButton *radioButton_1;
     QRadioButton *radioButton_2;
     QPushButton *pushButton_go;
+    QCheckBox *checkBox_res;
     QGraphicsView *graphicsView_img;
     QSlider *Slider;
     QMenuBar *menuBar;
@@ -145,6 +146,11 @@ public:
 
         verticalLayout->addWidget(pushButton_go);
 
+        checkBox_res = new QCheckBox(widget);
+        checkBox_res->setObjectName(QString::fromUtf8("checkBox_res"));
+
+        verticalLayout->addWidget(checkBox_res);
+
 
         horizontalLayout_3->addWidget(widget);
 
@@ -194,7 +200,7 @@ public:
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Ct\302\262 Inpainting", 0, QApplication::UnicodeUTF8));
         actionOuvrir_une_image->setText(QApplication::translate("MainWindow", "Ouvrir une image...", 0, QApplication::UnicodeUTF8));
         actionOuvrir_une_image->setShortcut(QApplication::translate("MainWindow", "Ctrl+O", 0, QApplication::UnicodeUTF8));
-        actionEnregistrer_l_image->setText(QApplication::translate("MainWindow", "Enregistrer l'image...", 0, QApplication::UnicodeUTF8));
+        actionEnregistrer_l_image->setText(QApplication::translate("MainWindow", "Enregistrer l'image resultat...", 0, QApplication::UnicodeUTF8));
         actionEnregistrer_l_image->setShortcut(QApplication::translate("MainWindow", "Ctrl+S", 0, QApplication::UnicodeUTF8));
         actionQuitter->setText(QApplication::translate("MainWindow", "Quitter", 0, QApplication::UnicodeUTF8));
         actionQuitter->setShortcut(QApplication::translate("MainWindow", "Ctrl+Q", 0, QApplication::UnicodeUTF8));
@@ -222,6 +228,7 @@ public:
         pushButton_go->setToolTip(QApplication::translate("MainWindow", "Lance l'inpainting", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
         pushButton_go->setText(QApplication::translate("MainWindow", "Go", 0, QApplication::UnicodeUTF8));
+        checkBox_res->setText(QApplication::translate("MainWindow", "Afficher resultat", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
         Slider->setToolTip(QApplication::translate("MainWindow", "Zoom", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP

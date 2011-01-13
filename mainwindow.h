@@ -18,6 +18,7 @@ class MainWindow : public QMainWindow {
 public:
     CImage * image;
     CImage * masque;
+    CImage * resultat;
     QLabel * label_img;
     QGraphicsScene *scene;
 
@@ -32,6 +33,8 @@ private:
     void setupMatrix(int i);
 
 private slots:
+    void on_pushButton_go_clicked();
+    void on_checkBox_res_stateChanged(int );
     void on_actionOuvrir_un_masque_triggered();
     void on_actionEnregistrer_le_masque_triggered();
     void on_toolButton_erase_clicked();

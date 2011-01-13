@@ -5,19 +5,34 @@ CImage::CImage(QString s)
     this->image = new QImage(s);
     this->move = false;
     this->mono = false;
-    this->pen_size = 1;
+    this->pen_size = 0;
 }
 
 CImage::CImage(int width, int height, int type)
 {
-    this->image = new QImage(width, height, QImage::Format_ARGB32);
-    for (int i = 0; i < this->image->width(); ++i) {
-        for(int j = 0; j < this->image->height(); ++j)
-            this->image->setPixel(i, j, qRgba(255, 255, 255, 0));
+    if (type == 1)
+    {
+        this->image = new QImage(width, height, QImage::Format_ARGB32);
+        for (int i = 0; i < this->image->width(); ++i) {
+            for(int j = 0; j < this->image->height(); ++j)
+                this->image->setPixel(i, j, qRgba(255, 255, 255, 0));
+        }
+        this->move = false;
+        this->mono = true;
+        this->pen_size = 1;
     }
-    this->move = false;
-    (type == 1)? this->mono = true: this->mono = false;
-    this->pen_size = 1;
+    else if (type == 0)
+    {
+        this->image = new QImage(width, height, QImage::Format_RGB32);
+        for (int i = 0; i < this->image->width(); ++i) {
+            for(int j = 0; j < this->image->height(); ++j)
+                this->image->setPixel(i, j, qRgb(255, 255, 255));
+        }
+        this->move = false;
+        this->mono = false;
+        this->pen_size = 0;
+    }
+
 }
 
 void CImage::Clear_img()
@@ -31,12 +46,14 @@ void CImage::Clear_img()
 
 void CImage::set_pen_size(int s)
 {
-    this->pen_size = s;
+    if (mono)
+        this->pen_size = s;
 }
 
 void CImage::set_pen_mode(int s)
 {
-    this->pen_mode = s;
+    if (mono)
+        this->pen_mode = s;
 }
 
 QRectF CImage::boundingRect() const
