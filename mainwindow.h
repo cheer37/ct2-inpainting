@@ -6,6 +6,7 @@
 #include <QFileDialog>
 #include <QDir>
 #include <QDebug>
+#include <QMessageBox>
 #include "cimage.h"
 
 namespace Ui {
@@ -31,6 +32,7 @@ private:
     void setupMatrix(int i);
 
 private slots:
+    void on_actionOuvrir_un_masque_triggered();
     void on_actionEnregistrer_le_masque_triggered();
     void on_toolButton_erase_clicked();
     void on_toolButton_write_clicked();

@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     this->masque = 0;
+    this->image = 0;
 }
 
 MainWindow::~MainWindow()
@@ -34,25 +35,43 @@ void MainWindow::on_actionQuitter_triggered()
 
 void MainWindow::on_actionOuvrir_une_image_triggered()
 {
-    QString filters("Images (*.jpg *.jpeg *.png *.gif *.bmp *.tga *.tif *.tiff)");
+    QString filters("Images (*.jpg *.jpeg *.pgm *.png *.gif *.bmp *.tga *.tif *.tiff)");
 
     QString filename = QFileDialog::getOpenFileName(this, "Choisir l'image...", ":", filters,0, QFileDialog::HideNameFilterDetails);
 
-    this->image = new CImage(filename);
-    scene = new QGraphicsScene();
-    scene->addItem(this->image);
-    this->masque = new CImage(this->image->width(), this->image->height(), 1);
-    scene->addItem(this->masque);
-    this->masque->set_pen_size(ui->spinBox_size->value());
-    this->masque->set_pen_mode(1);
-    ui->graphicsView_img->setScene(scene);
+    if (!filename.isEmpty())
+    {
+        this->image = new CImage(filename);
+        scene = new QGraphicsScene();
+        scene->addItem(this->image);
+        this->masque = new CImage(this->image->width(), this->image->height(), 1);
+        scene->addItem(this->masque);
+        this->masque->set_pen_size(ui->spinBox_size->value());
+        this->masque->set_pen_mode(1);
+        ui->graphicsView_img->setScene(scene);
+    }
+}
+
+void MainWindow::on_actionOuvrir_un_masque_triggered()
+{
+    if (this->image == 0)
+    {
+        QMessageBox::information(this, "Attention", "Veuillez ouvrir une image en premier.") ;
+    }
+    else
+    {
+        QString filters("Images (*.jpg *.jpeg *.pgm *.png *.gif *.bmp *.tga *.tif *.tiff)");
+
+        QString filename = QFileDialog::getOpenFileName(this, "Choisir le masque...", ":", filters,0, QFileDialog::HideNameFilterDetails);
+        this->masque->charger_masque(filename);
+    }
 }
 
 void MainWindow::on_actionEnregistrer_l_image_triggered()
 {
     QString Path = QFileDialog::getSaveFileName(this,
                                                      "Choisir un dossier",
-                                                     ":","Images (*.jpg *.jpeg *.png *.gif *.bmp *.tga *.tif *.tiff)");
+                                                     ":","Images (*.jpg *.pgm *.jpeg *.pgm *.png *.gif *.bmp *.tga *.tif *.tiff)");
     if(!Path.isNull())
     {
         /*QImage img(this->scene->width(), this->scene->height(), QImage::Format_RGB32);
@@ -69,7 +88,7 @@ void MainWindow::on_actionEnregistrer_le_masque_triggered()
 {
     QString Path = QFileDialog::getSaveFileName(this,
                                                      "Choisir un dossier",
-                                                     ":","Images (*.jpg *.jpeg *.png *.gif *.bmp *.tga *.tif *.tiff)");
+                                                     ":","Images (*.jpg *.jpeg *.pgm *.png *.gif *.bmp *.tga *.tif *.tiff)");
     if(!Path.isNull())
     {
         this->masque->save(Path);
@@ -133,3 +152,5 @@ void MainWindow::on_toolButton_erase_clicked()
         this->masque->set_pen_mode(0);
     }
 }
+
+

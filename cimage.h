@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QPainter>
 #include <QDebug>
+#include <QMessageBox>
 #include <QGraphicsSceneMouseEvent>
 
 class CImage : public QGraphicsItem
@@ -25,6 +26,7 @@ class CImage : public QGraphicsItem
         void set_pen_size(int);
         void set_pen_mode(int s);
         void save(QString);
+        void charger_masque(QString);
 
     private:
         void mousePressEvent(QGraphicsSceneMouseEvent *event);
