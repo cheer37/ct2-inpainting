@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>900</width>
+    <width>950</width>
     <height>600</height>
    </rect>
   </property>
@@ -272,7 +272,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>900</width>
+     <width>950</width>
      <height>23</height>
     </rect>
    </property>
@@ -327,10 +327,16 @@
    <property name="text">
     <string>Enregistrer le masque...</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
+   </property>
   </action>
   <action name="actionOuvrir_un_masque">
    <property name="text">
     <string>Ouvrir un masque...</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+O</string>
    </property>
   </action>
   <action name="actionUtilisation">
