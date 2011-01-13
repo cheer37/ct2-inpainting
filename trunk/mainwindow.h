@@ -33,6 +33,8 @@ private:
     void setupMatrix(int i);
 
 private slots:
+    void on_radioButton_2_clicked();
+    void on_radioButton_1_clicked();
     void on_actionAbout_triggered();
     void on_pushButton_go_clicked();
     void on_checkBox_res_stateChanged(int );
