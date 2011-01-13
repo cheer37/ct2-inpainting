@@ -125,6 +125,13 @@
            </property>
           </widget>
          </item>
+         <item>
+          <widget class="QCheckBox" name="checkBox_res">
+           <property name="text">
+            <string>Afficher resultat</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
       </item>
@@ -191,7 +198,7 @@
   </action>
   <action name="actionEnregistrer_l_image">
    <property name="text">
-    <string>Enregistrer l'image...</string>
+    <string>Enregistrer l'image resultat...</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
