@@ -69,6 +69,7 @@ void MainWindow::on_actionOuvrir_un_masque_triggered()
 
         QString filename = QFileDialog::getOpenFileName(this, "Choisir le masque...", ":", filters,0, QFileDialog::HideNameFilterDetails);
         this->masque->charger_masque(filename);
+        this->masque->update();
     }
 }
 
@@ -79,12 +80,6 @@ void MainWindow::on_actionEnregistrer_l_image_triggered()
                                                      ":","Images (*.jpg *.pgm *.jpeg *.pgm *.png *.gif *.bmp *.tga *.tif *.tiff)");
     if(!Path.isNull())
     {
-        /*QImage img(this->scene->width(), this->scene->height(), QImage::Format_RGB32);
-        QPainter painter;
-        painter.begin(&img);
-        this->scene->render(&painter);
-        painter.end();
-        img.save(Path);*/
         this->resultat->save(Path);
     }
 }
@@ -193,7 +188,7 @@ void MainWindow::on_pushButton_go_clicked()
         }
         else if (this->ui->radioButton_2->isChecked())
         {
-            QMessageBox::information(this, "Attention", "Methode 2 non implementee!") ;
+            QMessageBox::warning(this, "Attention", "Methode 2 non implementee!") ;
         }
     }
 }
