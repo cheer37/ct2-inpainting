@@ -24,7 +24,7 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_3">
       <item>
-       <widget class="QWidget" name="" native="true">
+       <widget class="QWidget" name="widget" native="true">
         <layout class="QVBoxLayout" name="verticalLayout">
          <property name="spacing">
           <number>1</number>
@@ -173,6 +173,7 @@
     </property>
     <addaction name="actionOuvrir_une_image"/>
     <addaction name="actionEnregistrer_l_image"/>
+    <addaction name="actionOuvrir_un_masque"/>
     <addaction name="actionEnregistrer_le_masque"/>
     <addaction name="separator"/>
     <addaction name="actionQuitter"/>
@@ -207,6 +208,11 @@
   <action name="actionEnregistrer_le_masque">
    <property name="text">
     <string>Enregistrer le masque...</string>
+   </property>
+  </action>
+  <action name="actionOuvrir_un_masque">
+   <property name="text">
+    <string>Ouvrir un masque...</string>
    </property>
   </action>
  </widget>

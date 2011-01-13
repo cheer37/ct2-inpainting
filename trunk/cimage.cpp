@@ -82,6 +82,30 @@ void CImage::mouseMoveEvent (QGraphicsSceneMouseEvent * event)
     }
 }
 
+void CImage::charger_masque(QString s)
+{
+    if (this->mono)
+    {
+        QImage *tmp = new QImage(s);
+        if (tmp->width() != this->image->width() || tmp->height() != this->image->height())
+             QMessageBox::information(0, "Attention", "Le masque n'est pas de la meme taille que l'image!") ;
+        else
+        {
+            for (int i = 0; i < this->image->width(); ++i) {
+                for(int j = 0; j < this->image->height(); ++j)
+                {
+                    if (tmp->pixel(i, j) == qRgb(255, 255, 255))
+                        this->image->setPixel(i, j, qRgba(255, 255, 255, 0));
+                    else
+                        this->image->setPixel(i, j, qRgba(0, 0, 0, 255));
+                }
+            }
+        }
+        delete tmp;
+    }
+    this->update();
+}
+
 void CImage::mouseReleaseEvent (QGraphicsSceneMouseEvent * event)
 {
     Q_UNUSED(event);

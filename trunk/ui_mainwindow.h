@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Thu Jan 13 00:51:59 2011
+** Created: Thu Jan 13 10:57:51 2011
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -40,6 +40,7 @@ public:
     QAction *actionEnregistrer_l_image;
     QAction *actionQuitter;
     QAction *actionEnregistrer_le_masque;
+    QAction *actionOuvrir_un_masque;
     QWidget *centralWidget;
     QVBoxLayout *verticalLayout_2;
     QHBoxLayout *horizontalLayout_3;
@@ -74,6 +75,8 @@ public:
         actionQuitter->setObjectName(QString::fromUtf8("actionQuitter"));
         actionEnregistrer_le_masque = new QAction(MainWindow);
         actionEnregistrer_le_masque->setObjectName(QString::fromUtf8("actionEnregistrer_le_masque"));
+        actionOuvrir_un_masque = new QAction(MainWindow);
+        actionOuvrir_un_masque->setObjectName(QString::fromUtf8("actionOuvrir_un_masque"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         verticalLayout_2 = new QVBoxLayout(centralWidget);
@@ -176,6 +179,7 @@ public:
         menuBar->addAction(menuMenu->menuAction());
         menuMenu->addAction(actionOuvrir_une_image);
         menuMenu->addAction(actionEnregistrer_l_image);
+        menuMenu->addAction(actionOuvrir_un_masque);
         menuMenu->addAction(actionEnregistrer_le_masque);
         menuMenu->addSeparator();
         menuMenu->addAction(actionQuitter);
@@ -195,6 +199,7 @@ public:
         actionQuitter->setText(QApplication::translate("MainWindow", "Quitter", 0, QApplication::UnicodeUTF8));
         actionQuitter->setShortcut(QApplication::translate("MainWindow", "Ctrl+Q", 0, QApplication::UnicodeUTF8));
         actionEnregistrer_le_masque->setText(QApplication::translate("MainWindow", "Enregistrer le masque...", 0, QApplication::UnicodeUTF8));
+        actionOuvrir_un_masque->setText(QApplication::translate("MainWindow", "Ouvrir un masque...", 0, QApplication::UnicodeUTF8));
         checkBox_masque->setText(QApplication::translate("MainWindow", "Afficher masque", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
         toolButton_write->setToolTip(QApplication::translate("MainWindow", "Active le pinceau", 0, QApplication::UnicodeUTF8));
