@@ -189,6 +189,7 @@ void MainWindow::on_pushButton_go_clicked()
                         this->resultat->setPixel(i, j, this->image->getPixel(i, j));
                 }
             }
+            this->scene->update();
         }
         else if (this->ui->radioButton_2->isChecked())
         {
@@ -200,4 +201,14 @@ void MainWindow::on_pushButton_go_clicked()
 void MainWindow::on_actionAbout_triggered()
 {
     QMessageBox::about(this, "Ct2", "La Ct2 est fiere de vous presenter son projet d'Inpainting!\n\n Simon Reynard, Vergeot Yoan.\n Master SIS Imagerie Numerique") ;
+}
+
+void MainWindow::on_radioButton_1_clicked()
+{
+    this->ui->radioButton_2->setChecked(false);
+}
+
+void MainWindow::on_radioButton_2_clicked()
+{
+    this->ui->radioButton_1->setChecked(false);
 }

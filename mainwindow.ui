@@ -22,97 +22,196 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="3,14">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
       <item>
        <widget class="QWidget" name="widget" native="true">
         <layout class="QVBoxLayout" name="verticalLayout">
          <property name="spacing">
-          <number>1</number>
+          <number>0</number>
          </property>
          <property name="sizeConstraint">
           <enum>QLayout::SetMinimumSize</enum>
          </property>
+         <property name="leftMargin">
+          <number>9</number>
+         </property>
+         <property name="topMargin">
+          <number>9</number>
+         </property>
+         <property name="rightMargin">
+          <number>9</number>
+         </property>
          <item>
-          <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0">
-           <property name="sizeConstraint">
-            <enum>QLayout::SetMinimumSize</enum>
-           </property>
-           <property name="spacing">
-            <number>6</number>
-           </property>
-           <item row="0" column="0">
-            <widget class="QCheckBox" name="checkBox_masque">
-             <property name="text">
-              <string>Afficher masque</string>
-             </property>
-             <property name="checked">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QToolButton" name="toolButton_write">
-             <property name="toolTip">
-              <string>Active le pinceau</string>
-             </property>
-             <property name="text">
-              <string>Pinceau</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="QSpinBox" name="spinBox_size">
-             <property name="toolTip">
-              <string>Taille du pinceau</string>
-             </property>
-             <property name="minimum">
-              <number>1</number>
-             </property>
-             <property name="maximum">
-              <number>5</number>
-             </property>
-             <property name="value">
-              <number>3</number>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QToolButton" name="toolButton_erase">
-             <property name="toolTip">
-              <string>Active la gomme</string>
-             </property>
-             <property name="text">
-              <string>Gomme</string>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="0">
-            <widget class="QPushButton" name="pushButton_clear">
-             <property name="toolTip">
-              <string>Efface le masque</string>
-             </property>
-             <property name="text">
-              <string>Effacer masque</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <widget class="QRadioButton" name="radioButton_1">
-           <property name="text">
-            <string>Methode 1</string>
-           </property>
-           <property name="checked">
+          <widget class="QGroupBox" name="groupBox_masque">
+           <property name="enabled">
             <bool>true</bool>
            </property>
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <property name="title">
+            <string>Masque</string>
+           </property>
+           <property name="flat">
+            <bool>false</bool>
+           </property>
+           <property name="checkable">
+            <bool>false</bool>
+           </property>
+           <widget class="QWidget" name="">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>20</y>
+              <width>142</width>
+              <height>121</height>
+             </rect>
+            </property>
+            <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0">
+             <property name="sizeConstraint">
+              <enum>QLayout::SetMinimumSize</enum>
+             </property>
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <item row="0" column="0">
+              <widget class="QCheckBox" name="checkBox_masque">
+               <property name="text">
+                <string>Afficher</string>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>16</width>
+                 <height>16</height>
+                </size>
+               </property>
+               <property name="checked">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QToolButton" name="toolButton_write">
+               <property name="toolTip">
+                <string>Active le pinceau</string>
+               </property>
+               <property name="text">
+                <string>Pinceau</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QSpinBox" name="spinBox_size">
+               <property name="toolTip">
+                <string>Taille du pinceau</string>
+               </property>
+               <property name="layoutDirection">
+                <enum>Qt::LeftToRight</enum>
+               </property>
+               <property name="wrapping">
+                <bool>false</bool>
+               </property>
+               <property name="frame">
+                <bool>true</bool>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+               <property name="minimum">
+                <number>1</number>
+               </property>
+               <property name="maximum">
+                <number>5</number>
+               </property>
+               <property name="value">
+                <number>3</number>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QToolButton" name="toolButton_erase">
+               <property name="toolTip">
+                <string>Active la gomme</string>
+               </property>
+               <property name="text">
+                <string>Gomme</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QPushButton" name="pushButton_clear">
+               <property name="toolTip">
+                <string>Efface le masque</string>
+               </property>
+               <property name="text">
+                <string>Effacer</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+           <zorder></zorder>
+           <zorder>frame</zorder>
           </widget>
          </item>
          <item>
-          <widget class="QRadioButton" name="radioButton_2">
-           <property name="text">
+          <widget class="QGroupBox" name="groupBoxmeth1">
+           <property name="title">
+            <string>Tschumperlé</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
+           <widget class="QRadioButton" name="radioButton_1">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>20</y>
+              <width>133</width>
+              <height>22</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Activée</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupBoxmeth2">
+           <property name="title">
             <string>Methode 2</string>
            </property>
+           <widget class="QRadioButton" name="radioButton_2">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>20</y>
+              <width>133</width>
+              <height>22</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Activée</string>
+            </property>
+           </widget>
+           <zorder>radioButton_2</zorder>
+           <zorder>frame_3</zorder>
           </widget>
          </item>
          <item>
@@ -128,7 +227,7 @@
          <item>
           <widget class="QCheckBox" name="checkBox_res">
            <property name="text">
-            <string>Afficher resultat</string>
+            <string>Afficher résultat</string>
            </property>
           </widget>
          </item>
@@ -137,6 +236,9 @@
       </item>
       <item>
        <widget class="QGraphicsView" name="graphicsView_img">
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
         <property name="renderHints">
          <set>QPainter::Antialiasing|QPainter::TextAntialiasing</set>
         </property>
