@@ -196,3 +196,8 @@ void MainWindow::on_pushButton_go_clicked()
         }
     }
 }
+
+void MainWindow::on_actionAbout_triggered()
+{
+    QMessageBox::about(this, "Ct2", "La Ct2 est fiere de vous presenter son projet d'Inpainting!\n\n Simon Reynard, Vergeot Yoan.\n Master SIS Imagerie Numerique") ;
+}

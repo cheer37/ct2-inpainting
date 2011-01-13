@@ -33,6 +33,7 @@ private:
     void setupMatrix(int i);
 
 private slots:
+    void on_actionAbout_triggered();
     void on_pushButton_go_clicked();
     void on_checkBox_res_stateChanged(int );
     void on_actionOuvrir_un_masque_triggered();

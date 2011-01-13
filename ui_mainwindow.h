@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Thu Jan 13 12:51:38 2011
+** Created: Thu Jan 13 13:00:38 2011
 **      by: Qt User Interface Compiler version 4.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -41,6 +41,8 @@ public:
     QAction *actionQuitter;
     QAction *actionEnregistrer_le_masque;
     QAction *actionOuvrir_un_masque;
+    QAction *actionUtilisation;
+    QAction *actionAbout;
     QWidget *centralWidget;
     QVBoxLayout *verticalLayout_2;
     QHBoxLayout *horizontalLayout_3;
@@ -60,6 +62,7 @@ public:
     QSlider *Slider;
     QMenuBar *menuBar;
     QMenu *menuMenu;
+    QMenu *menuAide;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *MainWindow)
@@ -78,6 +81,10 @@ public:
         actionEnregistrer_le_masque->setObjectName(QString::fromUtf8("actionEnregistrer_le_masque"));
         actionOuvrir_un_masque = new QAction(MainWindow);
         actionOuvrir_un_masque->setObjectName(QString::fromUtf8("actionOuvrir_un_masque"));
+        actionUtilisation = new QAction(MainWindow);
+        actionUtilisation->setObjectName(QString::fromUtf8("actionUtilisation"));
+        actionAbout = new QAction(MainWindow);
+        actionAbout->setObjectName(QString::fromUtf8("actionAbout"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         verticalLayout_2 = new QVBoxLayout(centralWidget);
@@ -177,18 +184,24 @@ public:
         menuBar->setGeometry(QRect(0, 0, 900, 23));
         menuMenu = new QMenu(menuBar);
         menuMenu->setObjectName(QString::fromUtf8("menuMenu"));
+        menuAide = new QMenu(menuBar);
+        menuAide->setObjectName(QString::fromUtf8("menuAide"));
         MainWindow->setMenuBar(menuBar);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QString::fromUtf8("statusBar"));
         MainWindow->setStatusBar(statusBar);
 
         menuBar->addAction(menuMenu->menuAction());
+        menuBar->addAction(menuAide->menuAction());
         menuMenu->addAction(actionOuvrir_une_image);
         menuMenu->addAction(actionEnregistrer_l_image);
         menuMenu->addAction(actionOuvrir_un_masque);
         menuMenu->addAction(actionEnregistrer_le_masque);
         menuMenu->addSeparator();
         menuMenu->addAction(actionQuitter);
+        menuAide->addAction(actionUtilisation);
+        menuAide->addSeparator();
+        menuAide->addAction(actionAbout);
 
         retranslateUi(MainWindow);
 
@@ -206,6 +219,8 @@ public:
         actionQuitter->setShortcut(QApplication::translate("MainWindow", "Ctrl+Q", 0, QApplication::UnicodeUTF8));
         actionEnregistrer_le_masque->setText(QApplication::translate("MainWindow", "Enregistrer le masque...", 0, QApplication::UnicodeUTF8));
         actionOuvrir_un_masque->setText(QApplication::translate("MainWindow", "Ouvrir un masque...", 0, QApplication::UnicodeUTF8));
+        actionUtilisation->setText(QApplication::translate("MainWindow", "Utilisation..", 0, QApplication::UnicodeUTF8));
+        actionAbout->setText(QApplication::translate("MainWindow", "About", 0, QApplication::UnicodeUTF8));
         checkBox_masque->setText(QApplication::translate("MainWindow", "Afficher masque", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
         toolButton_write->setToolTip(QApplication::translate("MainWindow", "Active le pinceau", 0, QApplication::UnicodeUTF8));
@@ -236,6 +251,7 @@ public:
         Slider->setWhatsThis(QApplication::translate("MainWindow", "Zoom", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_WHATSTHIS
         menuMenu->setTitle(QApplication::translate("MainWindow", "Menu", 0, QApplication::UnicodeUTF8));
+        menuAide->setTitle(QApplication::translate("MainWindow", "Aide", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };
