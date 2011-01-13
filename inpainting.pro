@@ -5,8 +5,12 @@ TARGET = inpainting
 TEMPLATE = app
 SOURCES += main.cpp \
     mainwindow.cpp \
-    cimage.cpp
+    cimage.cpp \
+    dialog_util.cpp
 HEADERS += mainwindow.h \
-    cimage.h
-FORMS += mainwindow.ui
+    cimage.h \
+    dialog_util.h
+FORMS += mainwindow.ui \
+    dialog_util.ui
 CONFIG += console
+CONFIG += uitools
