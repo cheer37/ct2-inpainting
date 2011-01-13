@@ -207,3 +207,9 @@ void MainWindow::on_radioButton_2_clicked()
 {
     this->ui->radioButton_1->setChecked(false);
 }
+
+void MainWindow::on_actionUtilisation_triggered()
+{
+    Dialog_util *fenetre = new Dialog_util();
+    fenetre->showNormal();
+}

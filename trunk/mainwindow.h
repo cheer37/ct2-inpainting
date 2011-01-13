@@ -7,7 +7,9 @@
 #include <QDir>
 #include <QDebug>
 #include <QMessageBox>
+#include <QtUiTools/quiloader.h>
 #include "cimage.h"
+#include "dialog_util.h"
 
 namespace Ui {
     class MainWindow;
@@ -33,6 +35,7 @@ private:
     void setupMatrix(int i);
 
 private slots:
+    void on_actionUtilisation_triggered();
     void on_radioButton_2_clicked();
     void on_radioButton_1_clicked();
     void on_actionAbout_triggered();
