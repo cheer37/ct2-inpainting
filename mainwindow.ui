@@ -70,7 +70,7 @@
            <property name="checkable">
             <bool>false</bool>
            </property>
-           <widget class="QWidget" name="">
+           <widget class="QWidget" name="layoutWidget">
             <property name="geometry">
              <rect>
               <x>0</x>
@@ -162,8 +162,6 @@
              </item>
             </layout>
            </widget>
-           <zorder></zorder>
-           <zorder>frame</zorder>
           </widget>
          </item>
          <item>
@@ -210,8 +208,6 @@
              <string>Activée</string>
             </property>
            </widget>
-           <zorder>radioButton_2</zorder>
-           <zorder>frame_3</zorder>
           </widget>
          </item>
          <item>
@@ -228,6 +224,13 @@
           <widget class="QCheckBox" name="checkBox_res">
            <property name="text">
             <string>Afficher résultat</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QProgressBar" name="progressBar">
+           <property name="value">
+            <number>0</number>
            </property>
           </widget>
          </item>
@@ -273,7 +276,7 @@
      <x>0</x>
      <y>0</y>
      <width>950</width>
-     <height>23</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuMenu">

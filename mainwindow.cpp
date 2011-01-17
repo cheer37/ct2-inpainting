@@ -176,20 +176,35 @@ void MainWindow::on_pushButton_go_clicked()
     {
         if (this->ui->radioButton_1->isChecked())//si methode 1 coché
         {
+            int w = this->image->width();
+            this->ui->progressBar->setMaximum(w);//initialise la progressbar
             for (int i = 0; i < this->image->width(); ++i) {
+                this->ui->progressBar->setValue(this->ui->progressBar->value()+1);//incremente la progressbar
                 for(int j = 0; j < this->image->height(); ++j) {
+
                     if (this->masque->getPixel(i, j) == qRgba(0, 0, 0, 255))
                         this->resultat->setPixel(i, j, qRgb(0, 0, 0));
                     else
                         this->resultat->setPixel(i, j, this->image->getPixel(i, j));
                 }
             }
-            this->scene->update();
         }
         else if (this->ui->radioButton_2->isChecked())
         {
             QMessageBox::warning(this, "Attention", "Methode 2 non implementee!") ;
         }
+
+        //Affiche le resultat et coche la case (declenche l'event cliked sur checbox_res
+        if (this->resultat != 0)
+        {
+            if (!this->ui->checkBox_res->isChecked())
+            {
+                this->ui->checkBox_res->setChecked(true);
+                this->scene->update();
+            }
+        }
+
+        this->ui->progressBar->setValue(0);//reset de la progressbar
     }
 }
 
