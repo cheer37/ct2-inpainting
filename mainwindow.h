@@ -10,6 +10,7 @@
 #include <QtUiTools/quiloader.h>
 #include "cimage.h"
 #include "dialog_util.h"
+#include "ctschumperle.h"
 
 namespace Ui {
     class MainWindow;
