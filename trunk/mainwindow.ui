@@ -162,6 +162,8 @@
              </item>
             </layout>
            </widget>
+           <zorder>layoutWidget</zorder>
+           <zorder>groupBoxmeth1</zorder>
           </widget>
          </item>
          <item>
@@ -175,7 +177,7 @@
            <widget class="QRadioButton" name="radioButton_1">
             <property name="geometry">
              <rect>
-              <x>0</x>
+              <x>10</x>
               <y>20</y>
               <width>133</width>
               <height>22</height>
@@ -188,6 +190,76 @@
              <bool>true</bool>
             </property>
            </widget>
+           <widget class="QWidget" name="layoutWidget_2">
+            <property name="geometry">
+             <rect>
+              <x>20</x>
+              <y>80</y>
+              <width>108</width>
+              <height>22</height>
+             </rect>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <item>
+              <widget class="QLabel" name="label_2">
+               <property name="text">
+                <string>Param 2</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QDoubleSpinBox" name="doubleSpinBox_2">
+               <property name="prefix">
+                <string/>
+               </property>
+               <property name="suffix">
+                <string/>
+               </property>
+               <property name="decimals">
+                <number>3</number>
+               </property>
+               <property name="maximum">
+                <double>200.000000000000000</double>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="">
+            <property name="geometry">
+             <rect>
+              <x>20</x>
+              <y>50</y>
+              <width>108</width>
+              <height>22</height>
+             </rect>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout">
+             <item>
+              <widget class="QLabel" name="label">
+               <property name="text">
+                <string>Param 1</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QDoubleSpinBox" name="doubleSpinBox">
+               <property name="prefix">
+                <string/>
+               </property>
+               <property name="suffix">
+                <string/>
+               </property>
+               <property name="decimals">
+                <number>3</number>
+               </property>
+               <property name="maximum">
+                <double>200.000000000000000</double>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
           </widget>
          </item>
          <item>
@@ -198,7 +270,7 @@
            <widget class="QRadioButton" name="radioButton_2">
             <property name="geometry">
              <rect>
-              <x>0</x>
+              <x>10</x>
               <y>20</y>
               <width>133</width>
               <height>22</height>

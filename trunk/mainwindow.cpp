@@ -178,7 +178,7 @@ void MainWindow::on_pushButton_go_clicked()
         {
             CTschumperle *algo = new CTschumperle();
             algo->set_progressbar(this->ui->progressBar);
-            algo->appliquer(this->image, this->masque, this->resultat, 1.0, 1.0);
+            algo->appliquer(this->image, this->masque, this->resultat, this->ui->doubleSpinBox->value(), this->ui->doubleSpinBox_2->value());
         }
         else if (this->ui->radioButton_2->isChecked())
         {
