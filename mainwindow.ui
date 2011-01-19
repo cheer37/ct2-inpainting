@@ -73,9 +73,9 @@
            <widget class="QWidget" name="layoutWidget">
             <property name="geometry">
              <rect>
-              <x>0</x>
+              <x>10</x>
               <y>20</y>
-              <width>142</width>
+              <width>121</width>
               <height>121</height>
              </rect>
             </property>
@@ -294,6 +294,12 @@
          </item>
          <item>
           <widget class="QCheckBox" name="checkBox_res">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>20</height>
+            </size>
+           </property>
            <property name="text">
             <string>Afficher résultat</string>
            </property>
