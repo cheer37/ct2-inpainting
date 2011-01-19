@@ -6,10 +6,12 @@ TEMPLATE = app
 SOURCES += main.cpp \
     mainwindow.cpp \
     cimage.cpp \
-    dialog_util.cpp
+    dialog_util.cpp \
+    ctschumperle.cpp
 HEADERS += mainwindow.h \
     cimage.h \
-    dialog_util.h
+    dialog_util.h \
+    ctschumperle.h
 FORMS += mainwindow.ui \
     dialog_util.ui
 CONFIG += console

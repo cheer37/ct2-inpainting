@@ -176,18 +176,9 @@ void MainWindow::on_pushButton_go_clicked()
     {
         if (this->ui->radioButton_1->isChecked())//si methode 1 coché
         {
-            int w = this->image->width();
-            this->ui->progressBar->setMaximum(w);//initialise la progressbar
-            for (int i = 0; i < this->image->width(); ++i) {
-                this->ui->progressBar->setValue(this->ui->progressBar->value()+1);//incremente la progressbar
-                for(int j = 0; j < this->image->height(); ++j) {
-
-                    if (this->masque->getPixel(i, j) == qRgba(0, 0, 0, 255))
-                        this->resultat->setPixel(i, j, qRgb(0, 0, 0));
-                    else
-                        this->resultat->setPixel(i, j, this->image->getPixel(i, j));
-                }
-            }
+            CTschumperle *algo = new CTschumperle();
+            algo->set_progressbar(this->ui->progressBar);
+            algo->appliquer(this->image, this->masque, this->resultat, 1.0, 1.0);
         }
         else if (this->ui->radioButton_2->isChecked())
         {
