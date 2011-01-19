@@ -122,7 +122,6 @@ void CImage::charger_masque(QString s)
             }
             else
             {
-                qDebug() << "Masque avec transparence!";
                 for (int i = 0; i < this->image->width(); ++i) {
                     for(int j = 0; j < this->image->height(); ++j)
                     {

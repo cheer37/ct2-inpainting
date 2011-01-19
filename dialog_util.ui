@@ -45,7 +45,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>2</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -139,7 +139,7 @@
 
 - Afficher résultat: afficher/cacher l'image résultat,
 
-- Enregistrer l'image résultat: enregistre l'image correspondant au résutat.</string>
+- Enregistrer l'image résultat: enregistre l'image correspondant au résultat.</string>
      </property>
     </widget>
    </widget>
