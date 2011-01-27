@@ -7,11 +7,13 @@ SOURCES += main.cpp \
     mainwindow.cpp \
     cimage.cpp \
     dialog_util.cpp \
-    ctschumperle.cpp
+    ctschumperle.cpp \
+    cmgvc.cpp
 HEADERS += mainwindow.h \
     cimage.h \
     dialog_util.h \
-    ctschumperle.h
+    ctschumperle.h \
+    cmgvc.h
 FORMS += mainwindow.ui \
     dialog_util.ui
 CONFIG += console
