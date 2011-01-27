@@ -7,11 +7,14 @@
 #include <QDebug>
 #include <QMessageBox>
 #include <QGraphicsSceneMouseEvent>
+#include "math.h"
 
 class CImage : public QGraphicsItem
 {
 
     public:
+        QImage * image;
+
         CImage(QString);
         CImage(int, int, int);
 
@@ -27,12 +30,18 @@ class CImage : public QGraphicsItem
         void set_pen_mode(int s);
         void save(QString);
         void charger_masque(QString);
+        void Copy(CImage * in);
+
+        QImage Laplacien();
+        QImage Gradient();
 
     private:
         void mousePressEvent(QGraphicsSceneMouseEvent *event);
         void mouseMoveEvent (QGraphicsSceneMouseEvent * event);
         void mouseReleaseEvent (QGraphicsSceneMouseEvent * event);
-        QImage * image;
+
+        QImage Filtre_lineraire(double m [], int n);
+
         bool move;
         bool mono;
         int pen_size;
