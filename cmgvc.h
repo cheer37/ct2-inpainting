@@ -2,6 +2,8 @@
 #define CMGVC_H
 
 #include "cimage.h"
+#include "cmatrimage.h"
+#include "cvector2f.h"
 #include <QProgressBar>
 
 class CMgvc

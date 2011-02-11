@@ -25,6 +25,9 @@ class CImage : public QGraphicsItem
         int height();
         void setPixel(int x, int y, QRgb c);
         QRgb getPixel(int, int);
+        int getRedPixel (int, int);
+        int getGreenPixel (int, int);
+        int getBluePixel (int, int);
         void Clear_img();
         void set_pen_size(int);
         void set_pen_mode(int s);
