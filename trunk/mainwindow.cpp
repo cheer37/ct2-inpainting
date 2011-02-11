@@ -182,7 +182,9 @@ void MainWindow::on_pushButton_go_clicked()
         }
         else if (this->ui->radioButton_2->isChecked())
         {
-            QMessageBox::warning(this, "Attention", "Methode 2 non implementee!") ;
+			CMgvc * algo = new CMgvc();
+			algo->set_progressbar(this->ui->progressBar);
+			algo->appliquer(this->image, this->masque, this->resultat, this->ui->doubleSpinBox->value(), this->ui->doubleSpinBox_2->value());
         }
 
         //Affiche le resultat et coche la case (declenche l'event cliked sur checbox_res

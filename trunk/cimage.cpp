@@ -165,6 +165,22 @@ QRgb CImage::getPixel(int x, int y)
     return this->image->pixel(x, y);
 }
 
+int CImage::getRedPixel (int x, int y)
+{
+    return qRed(this->getPixel(x,y));
+}
+
+int CImage::getGreenPixel (int x, int y)
+{
+    return qGreen(this->getPixel(x,y));
+}
+
+
+int CImage::getBluePixel (int x, int y)
+{
+    return qBlue(this->getPixel(x,y));
+}
+
 void CImage::save(QString path)
 {
     this->image->save(path);
