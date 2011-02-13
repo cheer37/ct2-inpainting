@@ -8,12 +8,16 @@ SOURCES += main.cpp \
     cimage.cpp \
     dialog_util.cpp \
     ctschumperle.cpp \
-    cmgvc.cpp
+    cmgvc.cpp \
+    cvector2f.cpp \
+    cmatrimage.cpp
 HEADERS += mainwindow.h \
     cimage.h \
     dialog_util.h \
     ctschumperle.h \
-    cmgvc.h
+    cmgvc.h \
+    cvector2f.h \
+    cmatrimage.h
 FORMS += mainwindow.ui \
     dialog_util.ui
 CONFIG += console

@@ -4,6 +4,7 @@
 #include "cimage.h"
 #include "cmatrimage.h"
 #include "cvector2f.h"
+#include "QDebug"
 #include <QProgressBar>
 
 class CMgvc
