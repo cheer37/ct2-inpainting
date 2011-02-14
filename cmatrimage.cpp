@@ -78,7 +78,7 @@ void CMatriMage::Laplacien (CImage * In)
             cpt = 0;
             for (int j = y-1; j <= y+1; ++j)
             {
-                for (int i = x-1; i <= i+1; ++i)
+				for (int i = x-1; i <= x+1; ++i)
                 {
                     ValR += filtre[cpt]*In->getRedPixel(i,j);
                     ValG += filtre[cpt]*In->getGreenPixel(i,j);
@@ -130,7 +130,7 @@ void CMatriMage::Gradient (CImage * In, CMatriMage * ResX, CMatriMage * ResY)
 
             for (int j = y-1; j <= y+1; ++j)
             {
-                for (int i = x-1; i <= i+1; ++i)
+				for (int i = x-1; i <= x+1; ++i)
                 {
                     ValRx += SobelX[cpt] * In->getRedPixel(i,j);
                     ValRy += SobelY[cpt] * In->getRedPixel(i,j);

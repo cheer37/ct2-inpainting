@@ -162,6 +162,15 @@ void CImage::setPixel(int x, int y, QRgb c)
 
 QRgb CImage::getPixel(int x, int y)
 {
+	if ( x < 0)
+		x = abs(x)-1;
+	else if ( x >= this->width())
+		x = this->width() - (x-this->width()) - 1;
+	if ( y < 0)
+		y = abs(y)-1;
+	else if ( y >= this->height())
+		y = this->height() - (y-this->height()) - 1;
+
     return this->image->pixel(x, y);
 }
 
