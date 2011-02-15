@@ -14,6 +14,60 @@ bool isOnEdgeOfOmega (CImage * masque, int x, int y)
 	return false;
 }
 
+int TransformInterval (int x, int min1, int max1, int min2, int max2)
+{
+	return ((x-min1)/(float)(max1-min1)*(max2-min2)) + min2;
+}
+
+void ExpansionDynamique (CImage * im, CImage * masque)
+{
+	int i, j, ValMin, ValMax, R, G, B;
+
+	ValMin = im->getRedPixel(0,0);
+	ValMax = im->getRedPixel(0,0);
+
+	for (j = 0; j < im->height(); ++j)
+	{
+		for (i = 0; i < im->width(); ++i)
+		{
+			if (masque->getPixel(i,j) == qRgba(0,0,0,255))
+			{
+				R = im->getRedPixel(i,j);
+				G = im->getGreenPixel(i,j);
+				B = im->getBluePixel(i,j);
+
+				if (R > ValMax)
+					ValMax = R;
+				else if (R < ValMin)
+					ValMin = R;
+
+				if (G > ValMax)
+					ValMax = G;
+				else if (G < ValMin)
+					ValMin = G;
+
+				if (B > ValMax)
+					ValMax = B;
+				else if (B < ValMin)
+					ValMin = B;
+			}
+		}
+	}
+	for (j = 0; j < im->height(); ++j)
+	{
+		for (i = 0; i < im->width(); ++i)
+		{
+			if (masque->getPixel(i,j) == qRgba(0,0,0,255))
+			{
+				R = TransformInterval(im->getRedPixel(i,j)  , ValMin, ValMax, 0, 255);
+				G = TransformInterval(im->getGreenPixel(i,j), ValMin, ValMax, 0, 255);
+				B = TransformInterval(im->getBluePixel(i,j) , ValMin, ValMax, 0, 255);
+				im->setPixel(i,j,qRgb(R,G,B));
+			}
+		}
+	}
+}
+
 void CMgvc::appliquer(CImage *init, CImage *masque, CImage *out, float nb_iter, float delta_t)
 {
 
@@ -24,20 +78,28 @@ void CMgvc::appliquer(CImage *init, CImage *masque, CImage *out, float nb_iter, 
     CMatriMage * SobelX    = new CMatriMage(init->width(), init->height());
     CMatriMage * SobelY    = new CMatriMage(init->width(), init->height());
 
-    CImage * temp = new CImage(init->width(), init->height(), 0);
-    CImage * masqueTemp = new CImage(init->width(), init->height(), 1);
-	CImage * valEr;
+	CImage * temp = new CImage(init->width(), init->height(), 0);
 
     CVector2f deltaLr, deltaLg, deltaLb;
     CVector2f Nr, Ng, Nb;
     int R, G, B;
+	float Br, Bg, Bb;
 
-	masqueTemp->Copy(masque);
     out->Copy(init);
+
+	for (int y = 0; y < init->height(); ++y)
+	{
+		for (int x = 0; x < init->width(); ++x)
+		{
+			if (masque->getPixel(x, y) == qRgba(0, 0, 0, 255))
+			{
+				out->setPixel(x,y,qRgb(0,0,0));
+			}
+		}
+	}
 
     for (int n = 0; n < nb_iter; ++n)
     {
-		valEr = new CImage(init->width(), init->height(), 0);
         this->progressbar->setValue(this->progressbar->value()+1);//incremente la progressbar
 
         temp->Copy(out);
@@ -46,14 +108,12 @@ void CMgvc::appliquer(CImage *init, CImage *masque, CImage *out, float nb_iter, 
         Gradient->Gradient(temp, SobelX, SobelY);
 
 
-        for (int j = 0; j < masqueTemp->height(); ++j)
+		for (int j = 0; j < masque->height(); ++j)
         {
-            for (int i = 0; i < masqueTemp->width(); ++i)
+			for (int i = 0; i < masque->width(); ++i)
             {
-				if (masqueTemp->getPixel(i, j) == qRgba(0, 0, 0, 255) /*&& isOnEdgeOfOmega(masque, j, i)*/)
+				if (masque->getPixel(i, j) == qRgba(0, 0, 0, 255) /*&& isOnEdgeOfOmega(masque, j, i)*/)
                 {
-					valEr->setPixel(i, j, qRgb(0,0,0));
-
                     deltaLr.SetVal(Laplacien->GetVal(i+1,j,0) - Laplacien->GetVal(i-1,j,0), Laplacien->GetVal(i+1,j,0) - Laplacien->GetVal(i-1,j,0));
                     deltaLg.SetVal(Laplacien->GetVal(i+1,j,1) - Laplacien->GetVal(i-1,j,1), Laplacien->GetVal(i+1,j,1) - Laplacien->GetVal(i-1,j,1));
                     deltaLb.SetVal(Laplacien->GetVal(i+1,j,2) - Laplacien->GetVal(i-1,j,2), Laplacien->GetVal(i+1,j,2) - Laplacien->GetVal(i-1,j,2));
@@ -62,31 +122,37 @@ void CMgvc::appliquer(CImage *init, CImage *masque, CImage *out, float nb_iter, 
                     Ng.SetVal(-(SobelY->GetVal(i,j, 1)), SobelX->GetVal(i,j, 1));
                     Nb.SetVal(-(SobelY->GetVal(i,j, 2)), SobelX->GetVal(i,j, 2));
 
-                    Nr/Nr.GetNorm();
-                    Ng/Ng.GetNorm();
-                    Nb/Nb.GetNorm();
+					if (Nr.GetNorm() > 0.0)
+						Nr/Nr.GetNorm();
+					else
+						Nr/0.000001;
 
-                    R = temp->getRedPixel(i,j)   + delta_t*(deltaLr*Nr*Gradient->GetVal(i,j, 0));
-                    G = temp->getGreenPixel(i,j) + delta_t*(deltaLg*Ng*Gradient->GetVal(i,j, 1));
-                    B = temp->getBluePixel(i,j)  + delta_t*(deltaLb*Nb*Gradient->GetVal(i,j, 2));
+					if (Ng.GetNorm() > 0.0)
+						Ng/Ng.GetNorm();
+					else
+						Ng/0.000001;
+
+					if (Nb.GetNorm() > 0.0)
+						Nb/Nb.GetNorm();
+					else
+						Nb/0.000001;
+
+					Br = deltaLr*Nr;
+					Bg = deltaLg*Ng;
+					Bb = deltaLb*Nb;
+
+
+					R = temp->getRedPixel(i,j)   + delta_t*(Br*Gradient->GetVal(i,j, 0));
+					G = temp->getGreenPixel(i,j) + delta_t*(Bg*Gradient->GetVal(i,j, 1));
+					B = temp->getBluePixel(i,j)  + delta_t*(Bb*Gradient->GetVal(i,j, 2));
 
                     out->setPixel(i, j, qRgb(R,G,B));
                 }
             }
         }
-
-		for (int j = 0; j < masqueTemp->height(); ++j)
-		{
-			for (int i = 0; i < masqueTemp->width(); ++i)
-			{
-				if (valEr->getPixel(i, j) == qRgb(0, 0, 0))
-				{
-					masqueTemp->setPixel(i, j, qRgba (255,255,255, 0));
-				}
-			}
-		}
-		delete valEr;
     }
+	ExpansionDynamique(out, masque);
+
 }
 
 void CMgvc::set_progressbar(QProgressBar * bar)
