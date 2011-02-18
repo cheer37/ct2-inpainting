@@ -198,9 +198,16 @@ void CImage::save(QString path)
 
 void CImage::Copy(CImage * in)
 {
-    delete this->image;
-    QImage * tmp = new QImage(*in->image);
-    this->image = tmp;
+	delete this->image;
+	QImage * tmp = new QImage(*in->image);
+	this->image = tmp;
+}
+
+void CImage::Copy(QImage * in)
+{
+	delete this->image;
+	QImage * tmp = new QImage(*in);
+	this->image = tmp;
 }
 
 QImage CImage::Filtre_lineraire(double m [], int n)

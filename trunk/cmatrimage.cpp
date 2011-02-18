@@ -169,3 +169,16 @@ void CMatriMage::Gradient (CImage * In, CMatriMage * ResX, CMatriMage * ResY)
         }
     }
 }
+
+
+QImage * CMatriMage::GetQImage ()
+{
+	QImage *res = new QImage(this->width, this->height, QImage::Format_RGB32);
+
+	for (int y = 0; y < this->height; ++y)
+	{
+		for(int x = 0; x < this->width; ++x)
+			res->setPixel(x, y, qRgb(this->GetVal(x, y, 0),this->GetVal(x, y, 1), this->GetVal(x, y, 2)));
+	}
+	return res;
+}
