@@ -4,16 +4,6 @@ CMgvc::CMgvc()
 {
 }
 
-bool isOnEdgeOfOmega (CImage * masque, int x, int y)
-{
-	for (int j = y-1; j <= y+1; ++j)
-		for (int i = x-1; i <= x+1; ++i)
-			if (masque->getPixel(i, j) == qRgba(255, 255, 255, 0))
-				return true;
-
-	return false;
-}
-
 int TransformInterval (int x, int min1, int max1, int min2, int max2)
 {
 	return ((x-min1)/(float)(max1-min1)*(max2-min2)) + min2;
@@ -53,6 +43,7 @@ void ExpansionDynamique (CImage * im, CImage * masque)
 			}
 		}
 	}
+
 	for (j = 0; j < im->height(); ++j)
 	{
 		for (i = 0; i < im->width(); ++i)
@@ -66,6 +57,20 @@ void ExpansionDynamique (CImage * im, CImage * masque)
 			}
 		}
 	}
+}
+
+float min(float A, float B)
+{
+	if (A > B)
+		return B;
+	return A;
+}
+
+float max(float A, float B)
+{
+	if (A > B)
+		return A;
+	return B;
 }
 
 void CMgvc::appliquer(CImage *init, CImage *masque, CImage *out, float nb_iter, float delta_t)
@@ -82,8 +87,9 @@ void CMgvc::appliquer(CImage *init, CImage *masque, CImage *out, float nb_iter, 
 
     CVector2f deltaLr, deltaLg, deltaLb;
     CVector2f Nr, Ng, Nb;
-    int R, G, B;
-	float Br, Bg, Bb;
+	int R, G, B;		// Valeur calculé du pixel pour chaque canal
+	float Br, Bg, Bb;	// Beta pour chaque canal
+	float Gr, Gg, Gb;	// Norme du gradient pour chaque canal
 
     out->Copy(init);
 
@@ -107,51 +113,105 @@ void CMgvc::appliquer(CImage *init, CImage *masque, CImage *out, float nb_iter, 
         Laplacien->Laplacien(temp);
         Gradient->Gradient(temp, SobelX, SobelY);
 
-
+/*
 		for (int j = 0; j < masque->height(); ++j)
         {
 			for (int i = 0; i < masque->width(); ++i)
             {
-				if (masque->getPixel(i, j) == qRgba(0, 0, 0, 255) /*&& isOnEdgeOfOmega(masque, j, i)*/)
+				if (masque->getPixel(i, j) == qRgba(0, 0, 0, 255))
                 {
-                    deltaLr.SetVal(Laplacien->GetVal(i+1,j,0) - Laplacien->GetVal(i-1,j,0), Laplacien->GetVal(i+1,j,0) - Laplacien->GetVal(i-1,j,0));
-                    deltaLg.SetVal(Laplacien->GetVal(i+1,j,1) - Laplacien->GetVal(i-1,j,1), Laplacien->GetVal(i+1,j,1) - Laplacien->GetVal(i-1,j,1));
-                    deltaLb.SetVal(Laplacien->GetVal(i+1,j,2) - Laplacien->GetVal(i-1,j,2), Laplacien->GetVal(i+1,j,2) - Laplacien->GetVal(i-1,j,2));
+					deltaLr.SetVal(Laplacien->GetVal(i+1,j,0) - Laplacien->GetVal(i-1,j,0), Laplacien->GetVal(i,j+1,0) - Laplacien->GetVal(i,j-1,0));
+					deltaLg.SetVal(Laplacien->GetVal(i+1,j,1) - Laplacien->GetVal(i-1,j,1), Laplacien->GetVal(i,j+1,1) - Laplacien->GetVal(i,j-1,1));
+					deltaLb.SetVal(Laplacien->GetVal(i+1,j,2) - Laplacien->GetVal(i-1,j,2), Laplacien->GetVal(i,j+1,2) - Laplacien->GetVal(i,j-1,2));
 
                     Nr.SetVal(-(SobelY->GetVal(i,j, 0)), SobelX->GetVal(i,j, 0));
                     Ng.SetVal(-(SobelY->GetVal(i,j, 1)), SobelX->GetVal(i,j, 1));
                     Nb.SetVal(-(SobelY->GetVal(i,j, 2)), SobelX->GetVal(i,j, 2));
 
-					if (Nr.GetNorm() > 0.0)
-						Nr/Nr.GetNorm();
-					else
-						Nr/0.000001;
-
-					if (Ng.GetNorm() > 0.0)
-						Ng/Ng.GetNorm();
-					else
-						Ng/0.000001;
-
-					if (Nb.GetNorm() > 0.0)
-						Nb/Nb.GetNorm();
-					else
-						Nb/0.000001;
+					Nr/(Nr.GetNorm()+0.000000001);
+					Ng/(Ng.GetNorm()+0.000000001);
+					Nb/(Nb.GetNorm()+0.000000001);
 
 					Br = deltaLr*Nr;
 					Bg = deltaLg*Ng;
 					Bb = deltaLb*Nb;
 
+					if ( Br >= 0.0)
+					{
+						int bX = min(temp->getRedPixel(i+1,j) - temp->getRedPixel(i,j), temp->getRedPixel(i,j) - temp->getRedPixel(i-1,j));
+						int fX = max(temp->getRedPixel(i,j) - temp->getRedPixel(i+1,j), temp->getRedPixel(i-1,j) - temp->getRedPixel(i,j));
 
-					R = temp->getRedPixel(i,j)   + delta_t*(Br*Gradient->GetVal(i,j, 0));
-					G = temp->getGreenPixel(i,j) + delta_t*(Bg*Gradient->GetVal(i,j, 1));
-					B = temp->getBluePixel(i,j)  + delta_t*(Bb*Gradient->GetVal(i,j, 2));
+						int bY = min(temp->getRedPixel(i,j+1) - temp->getRedPixel(i,j), temp->getRedPixel(i,j) - temp->getRedPixel(i,j-1));
+						int fY = max(temp->getRedPixel(i,j) - temp->getRedPixel(i,j+1), temp->getRedPixel(i,j-1) - temp->getRedPixel(i,j));
+
+						Gr = sqrt( pow(bX,2) + pow(fX,2) + pow(bY,2) + pow(fY,2));
+					}
+					else
+					{
+						int bX = max(temp->getRedPixel(i+1,j) - temp->getRedPixel(i,j), temp->getRedPixel(i,j) - temp->getRedPixel(i-1,j));
+						int fX = min(temp->getRedPixel(i,j) - temp->getRedPixel(i+1,j), temp->getRedPixel(i-1,j) - temp->getRedPixel(i,j));
+
+						int bY = max(temp->getRedPixel(i,j+1) - temp->getRedPixel(i,j), temp->getRedPixel(i,j) - temp->getRedPixel(i,j-1));
+						int fY = min(temp->getRedPixel(i,j) - temp->getRedPixel(i,j+1), temp->getRedPixel(i,j-1) - temp->getRedPixel(i,j));
+
+						Gr = sqrt( pow(bX,2) + pow(fX,2) + pow(bY,2) + pow(fY,2));
+					}
+
+					if ( Bg >= 0.0)
+					{
+						int bX = min(temp->getGreenPixel(i+1,j) - temp->getGreenPixel(i,j), temp->getGreenPixel(i,j) - temp->getGreenPixel(i-1,j));
+						int fX = max(temp->getGreenPixel(i,j) - temp->getGreenPixel(i+1,j), temp->getGreenPixel(i-1,j) - temp->getGreenPixel(i,j));
+
+						int bY = min(temp->getGreenPixel(i,j+1) - temp->getGreenPixel(i,j), temp->getGreenPixel(i,j) - temp->getGreenPixel(i,j-1));
+						int fY = max(temp->getGreenPixel(i,j) - temp->getGreenPixel(i,j+1), temp->getGreenPixel(i,j-1) - temp->getGreenPixel(i,j));
+
+						Gg = sqrt( pow(bX,2) + pow(fX,2) + pow(bY,2) + pow(fY,2));
+					}
+					else
+					{
+						int bX = max(temp->getGreenPixel(i+1,j) - temp->getGreenPixel(i,j), temp->getGreenPixel(i,j) - temp->getGreenPixel(i-1,j));
+						int fX = min(temp->getGreenPixel(i,j) - temp->getGreenPixel(i+1,j), temp->getGreenPixel(i-1,j) - temp->getGreenPixel(i,j));
+
+						int bY = max(temp->getGreenPixel(i,j+1) - temp->getGreenPixel(i,j), temp->getGreenPixel(i,j) - temp->getGreenPixel(i,j-1));
+						int fY = min(temp->getGreenPixel(i,j) - temp->getGreenPixel(i,j+1), temp->getGreenPixel(i,j-1) - temp->getGreenPixel(i,j));
+
+						Gg = sqrt( pow(bX,2) + pow(fX,2) + pow(bY,2) + pow(fY,2));
+					}
+
+					if ( Bb >= 0.0)
+					{
+						int bX = min(temp->getBluePixel(i+1,j) - temp->getBluePixel(i,j), temp->getBluePixel(i,j) - temp->getBluePixel(i-1,j));
+						int fX = max(temp->getBluePixel(i,j) - temp->getBluePixel(i+1,j), temp->getBluePixel(i-1,j) - temp->getBluePixel(i,j));
+
+						int bY = min(temp->getBluePixel(i,j+1) - temp->getBluePixel(i,j), temp->getBluePixel(i,j) - temp->getBluePixel(i,j-1));
+						int fY = max(temp->getBluePixel(i,j) - temp->getBluePixel(i,j+1), temp->getBluePixel(i,j-1) - temp->getBluePixel(i,j));
+
+						Gb = sqrt( pow(bX,2) + pow(fX,2) + pow(bY,2) + pow(fY,2));
+					}
+					else
+					{
+						int bX = max(temp->getBluePixel(i+1,j) - temp->getBluePixel(i,j), temp->getBluePixel(i,j) - temp->getBluePixel(i-1,j));
+						int fX = min(temp->getBluePixel(i,j) - temp->getBluePixel(i+1,j), temp->getBluePixel(i-1,j) - temp->getBluePixel(i,j));
+
+						int bY = max(temp->getBluePixel(i,j+1) - temp->getBluePixel(i,j), temp->getBluePixel(i,j) - temp->getBluePixel(i,j-1));
+						int fY = min(temp->getBluePixel(i,j) - temp->getBluePixel(i,j+1), temp->getBluePixel(i,j-1) - temp->getBluePixel(i,j));
+
+						Gb = sqrt( pow(bX,2) + pow(fX,2) + pow(bY,2) + pow(fY,2));
+					}
+
+
+
+					R = temp->getRedPixel(i,j)   + delta_t*(Br*Gr);
+					G = temp->getGreenPixel(i,j) + delta_t*(Bg*Gg);
+					B = temp->getBluePixel(i,j)  + delta_t*(Bb*Gb);
 
                     out->setPixel(i, j, qRgb(R,G,B));
                 }
             }
-        }
+		}*/
     }
-	ExpansionDynamique(out, masque);
+	out->Copy(Laplacien->GetQImage());
+//	ExpansionDynamique(out, masque);
 
 }
 

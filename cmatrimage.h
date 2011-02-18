@@ -17,6 +17,8 @@ public:
     void SetData (int width, int height, int * data);
     QRgb GetRgb (int x, int y);
 
+	QImage * GetQImage ();
+
     void Laplacien (CImage * In);
     void Gradient (CImage * In, CMatriMage * Rx, CMatriMage * Ry);
 
