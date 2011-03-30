@@ -6,6 +6,7 @@
 #include "cvector2f.h"
 #include "QDebug"
 #include <QProgressBar>
+#include <iostream>
 
 class CMgvc
 {

@@ -12,20 +12,22 @@ public:
     CMatriMage(int width, int height);
     CMatriMage(CImage * In);
 
-    int  GetVal (int x, int y, int canal); //  0 <= canal <= 2
-    void SetVal (int x, int y, int canal, int val); //  0 <= canal <= 2
-    void SetData (int width, int height, int * data);
+    float  GetVal (int x, int y, int canal); //  0 <= canal <= 2
+    void SetVal (int x, int y, int canal, float val); //  0 <= canal <= 2
+    void SetData (int width, int height, float * data);
     QRgb GetRgb (int x, int y);
 
-	QImage * GetQImage ();
+    QImage * GetQImage ();
 
-    void Laplacien (CImage * In);
-    void Gradient (CImage * In, CMatriMage * Rx, CMatriMage * Ry);
+    void Laplacien (CMatriMage * In);
+    void Gradient (CMatriMage * In, CMatriMage * Rx, CMatriMage * Ry);
 
-private:
+    void Copy (CMatriMage * In);
+
+
     int width;
     int height;
-    int * data;
+    float * data;
 };
 
 #endif // CMATRIMAGE_H
