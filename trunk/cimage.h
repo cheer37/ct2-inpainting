@@ -33,8 +33,8 @@ class CImage : public QGraphicsItem
         void set_pen_mode(int s);
         void save(QString);
         void charger_masque(QString);
-		void Copy(CImage * in);
-		void Copy(QImage * in);
+        void Copy(CImage * in);
+        void Copy(QImage * in);
 
         QImage Laplacien();
         QImage Gradient();

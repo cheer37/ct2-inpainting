@@ -10,14 +10,18 @@ SOURCES += main.cpp \
     ctschumperle.cpp \
     cmgvc.cpp \
     cvector2f.cpp \
-    cmatrimage.cpp
+    cmatrimage.cpp \
+    chessian.cpp \
+    cdifftensor.cpp
 HEADERS += mainwindow.h \
     cimage.h \
     dialog_util.h \
     ctschumperle.h \
     cmgvc.h \
     cvector2f.h \
-    cmatrimage.h
+    cmatrimage.h \
+    chessian.h \
+    cdifftensor.h
 FORMS += mainwindow.ui \
     dialog_util.ui
 CONFIG += console
