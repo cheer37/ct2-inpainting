@@ -1,24 +1,78 @@
 #include "ctschumperle.h"
+#include <iostream>
 
 CTschumperle::CTschumperle()
 {
 
 }
 
-void CTschumperle::appliquer(CImage *init, CImage *masque, CImage *out, float param1, float param2)
+void CTschumperle::appliquer(CImage *init, CImage *masque, CImage *out, float _iteration, float param2)
 {
-    int w = init->width();
-    this->progressbar->setMaximum(w);//initialise la progressbar
-    for (int i = 0; i < init->width(); ++i)
+    this->progressbar->setMaximum(_iteration);//initialise la progressbar
+
+    CImage *I_tmp = new CImage(init->width(), init->height(), 0);
+    out->Copy(init);
+
+    for (int y = 0; y < init->height(); ++y)
+    {
+        for (int x = 0; x < init->width(); ++x)
+        {
+            if (masque->getPixel(x, y) == qRgba(0, 0, 0, 255))
+            {
+                out->setPixel(x, y, qRgb(0, 0, 0));
+            }
+        }
+    }
+
+    for (int it = 0; it < _iteration; ++it)
     {
         this->progressbar->setValue(this->progressbar->value()+1);//incremente la progressbar
-        for(int j = 0; j < init->height(); ++j)
+
+        I_tmp->Copy(out);
+        for (int j = 0; j < masque->height(); ++j)
         {
-            if (masque->getPixel(i, j) == qRgba(0, 0, 0, 255))
-                out->setPixel(i, j, qRgb(0, 0, 0));
-            else
-                out->setPixel(i, j, init->getPixel(i, j));
+            for (int i = 0; i < masque->width(); ++i)
+            {
+                if (masque->getPixel(i, j) == qRgba(0, 0, 0, 255))
+                {
+                    double *H_r = CHessian::GetHessian(I_tmp, i, j, 0);
+                    double *H_g = CHessian::GetHessian(I_tmp, i, j, 1);
+                    double *H_b = CHessian::GetHessian(I_tmp, i, j, 2);
+
+                    CDiffTensor T = CDiffTensor(I_tmp, i, j);
+                    double *D_r = T.GetDiffTensor_r();
+                    double *D_g = T.GetDiffTensor_g();
+                    double *D_b = T.GetDiffTensor_b();
+
+                    /*AJOUTER GAUSSIENE SUR LES MATRICES 'D' */
+                    double Mat_res_r[4];
+                    double Mat_res_g[4];
+                    double Mat_res_b[4];
+
+                    Mat_res_r[0] = D_r[0]*H_r[0]+D_r[1]*H_r[2];
+                    Mat_res_r[1] = D_r[0]*H_r[1]+D_r[1]*H_r[3];
+                    Mat_res_r[2] = D_r[2]*H_r[0]+D_r[3]*H_r[2];
+                    Mat_res_r[3] = D_r[2]*H_r[1]+D_r[3]*H_r[3];
+
+                    Mat_res_g[0] = D_g[0]*H_g[0]+D_g[1]*H_g[2];
+                    Mat_res_g[1] = D_g[0]*H_g[1]+D_g[1]*H_g[3];
+                    Mat_res_g[2] = D_g[2]*H_g[0]+D_g[3]*H_g[2];
+                    Mat_res_g[3] = D_g[2]*H_g[1]+D_g[3]*H_g[3];
+
+                    Mat_res_b[0] = D_b[0]*H_b[0]+D_b[1]*H_b[2];
+                    Mat_res_b[1] = D_b[0]*H_b[1]+D_b[1]*H_b[3];
+                    Mat_res_b[2] = D_b[2]*H_b[0]+D_b[3]*H_b[2];
+                    Mat_res_b[3] = D_b[2]*H_b[1]+D_b[3]*H_b[3];
+
+                    out->setPixel(i, j, qRgb(Mat_res_r[0]+Mat_res_r[3], Mat_res_g[0]+Mat_res_g[3], Mat_res_b[0]+Mat_res_b[3]));
+
+                    /*std::cerr << "Val R:" << Mat_res_r[0]+Mat_res_r[3];
+                    std::cerr << "  Val G:" << Mat_res_g[0]+Mat_res_g[3];
+                    std::cerr << "  Val B:" << Mat_res_b[0]+Mat_res_b[3] << '\n';*/
+                }
+            }
         }
+
     }
 }
 
