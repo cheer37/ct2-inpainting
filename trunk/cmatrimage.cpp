@@ -5,18 +5,28 @@ CMatriMage::CMatriMage(int width, int height)
 {
     this->height = height;
     this->width = width;
-    data = new int [width*height*3];
+    data = new float [width*height*3];
 }
 
 CMatriMage::CMatriMage(CImage * In)
 {
     this->height = In->height();
     this->width = In->width();
-    this->data = new int [width*height*3];
+    this->data = new float [width*height*3];
+
+    for (int j = 0; j < In->height(); ++j)
+    {
+        for (int i = 0; i < In->width(); ++i)
+        {
+            this->SetVal(i,j,0,In->getRedPixel(i,j));
+            this->SetVal(i,j,1,In->getGreenPixel(i,j));
+            this->SetVal(i,j,2,In->getBluePixel(i,j));
+        }
+    }
 }
 
 
-int CMatriMage::GetVal (int x, int y, int canal)
+float CMatriMage::GetVal (int x, int y, int canal)
 {
     if ( x > this->width )
         x = this->width - (x-this->width) - 1;
@@ -31,13 +41,13 @@ int CMatriMage::GetVal (int x, int y, int canal)
     return this->data[ ((this->width*y)+x)*3 + canal];
 }
 
-void CMatriMage::SetVal (int x, int y, int canal, int val)
+void CMatriMage::SetVal (int x, int y, int canal, float val)
 {
     if (canal > -1 && canal < 3)
         this->data[ ((this->width*y)+x)*3 + canal] = val;
 }
 
-void CMatriMage::SetData(int width, int height, int * data)
+void CMatriMage::SetData(int width, int height, float * data)
 {
     delete this->data;
     this->width = width;
@@ -50,22 +60,22 @@ QRgb CMatriMage::GetRgb (int x, int y)
     return qRgb(GetVal(x,y,0),GetVal(x,y,1),GetVal(x,y,2));
 }
 
-void CMatriMage::Laplacien (CImage * In)
+void CMatriMage::Laplacien (CMatriMage * In)
 {
 
-    if (!this->data || this->height != In->height() || this->width != In->width())
+    if (!this->data || this->height != In->height || this->width != In->width)
     {
         delete this->data;
-        this->height = In->height();
-        this->width = In->width();
-        this->data = new int [width*height*3];
+        this->height = In->height;
+        this->width = In->width;
+        this->data = new float [this->width*this->height*3];
     }
 
     int ValR, ValG, ValB, cpt;
 
     float filtre [] = {0.0, 1.0, 0.0,
                        1.0, -4.0, 1.0,
-                       0.0, 1.0, 1.0};
+                       0.0, 1.0, 0.0};
 
 
     for (int y = 0; y < height; ++y)
@@ -78,11 +88,17 @@ void CMatriMage::Laplacien (CImage * In)
             cpt = 0;
             for (int j = y-1; j <= y+1; ++j)
             {
-				for (int i = x-1; i <= x+1; ++i)
+                for (int i = x-1; i <= x+1; ++i)
                 {
-                    ValR += filtre[cpt]*In->getRedPixel(i,j);
-                    ValG += filtre[cpt]*In->getGreenPixel(i,j);
-                    ValB += filtre[cpt]*In->getBluePixel(i,j);
+                    float tempR, tempG, tempB;
+
+                    tempR = In->GetVal(i,j,0);
+                    tempG = In->GetVal(i,j,1);
+                    tempB = In->GetVal(i,j,2);
+
+                    ValR += filtre[cpt]*tempR;
+                    ValG += filtre[cpt]*tempG;
+                    ValB += filtre[cpt]*tempB;
                     ++cpt;
                 }
             }
@@ -93,14 +109,14 @@ void CMatriMage::Laplacien (CImage * In)
     }
 }
 
-void CMatriMage::Gradient (CImage * In, CMatriMage * ResX, CMatriMage * ResY)
+void CMatriMage::Gradient (CMatriMage * In, CMatriMage * ResX, CMatriMage * ResY)
 {
-    if (!this->data || this->height != In->height() || this->width != In->width())
+    if (!this->data || this->height != In->height || this->width != In->width)
     {
         delete this->data;
-        this->height = In->height();
-        this->width = In->width();
-        this->data = new int [width*height*3];
+        this->height = In->height;
+        this->width = In->width;
+        this->data = new float [this->width*this->height*3];
     }
 
 
@@ -112,7 +128,8 @@ void CMatriMage::Gradient (CImage * In, CMatriMage * ResX, CMatriMage * ResY)
                         0.0, 0.0, 0.0,
                         1.0, 2.0, 1.0};
 
-    int ValRx, ValRy, ValGx, ValGy, ValBx, ValBy, ValGr, ValGg, ValGb, cpt;
+    float ValRx, ValRy, ValGx, ValGy, ValBx, ValBy, ValGr, ValGg, ValGb;
+    int cpt;
 
     for (int y = 0; y < height; ++y)
     {
@@ -130,16 +147,16 @@ void CMatriMage::Gradient (CImage * In, CMatriMage * ResX, CMatriMage * ResY)
 
             for (int j = y-1; j <= y+1; ++j)
             {
-				for (int i = x-1; i <= x+1; ++i)
+                for (int i = x-1; i <= x+1; ++i)
                 {
-                    ValRx += SobelX[cpt] * In->getRedPixel(i,j);
-                    ValRy += SobelY[cpt] * In->getRedPixel(i,j);
+                    ValRx += SobelX[cpt] * In->GetVal(i,j,0);
+                    ValRy += SobelY[cpt] * In->GetVal(i,j,0);
 
-                    ValGx += SobelX[cpt] * In->getGreenPixel(i,j);
-                    ValGy += SobelY[cpt] * In->getGreenPixel(i,j);
+                    ValGx += SobelX[cpt] * In->GetVal(i,j,1);
+                    ValGy += SobelY[cpt] * In->GetVal(i,j,1);
 
-                    ValBx += SobelX[cpt] * In->getBluePixel(i,j);
-                    ValBy += SobelY[cpt] * In->getBluePixel(i,j);
+                    ValBx += SobelX[cpt] * In->GetVal(i,j,2);
+                    ValBy += SobelY[cpt] * In->GetVal(i,j,2);
 
                     ++cpt;
                 }
@@ -177,8 +194,30 @@ QImage * CMatriMage::GetQImage ()
 
 	for (int y = 0; y < this->height; ++y)
 	{
-		for(int x = 0; x < this->width; ++x)
-			res->setPixel(x, y, qRgb(this->GetVal(x, y, 0),this->GetVal(x, y, 1), this->GetVal(x, y, 2)));
+            for(int x = 0; x < this->width; ++x)
+                res->setPixel(x, y, qRgb(this->GetVal(x, y, 0),this->GetVal(x, y, 1), this->GetVal(x, y, 2)));
 	}
 	return res;
+}
+
+
+void CMatriMage::Copy(CMatriMage * In)
+{
+    if (!this->data || this->height != In->height || this->width != In->width)
+    {
+        delete this->data;
+        this->height = In->height;
+        this->width = In->width;
+        this->data = new float [this->width*this->height*3];
+    }
+
+    for (int y = 0; y < height; ++y)
+    {
+        for (int x = 0; x < width; ++x)
+        {
+            this->SetVal(x,y,0,In->GetVal(x,y,0));
+            this->SetVal(x,y,1,In->GetVal(x,y,1));
+            this->SetVal(x,y,2,In->GetVal(x,y,2));
+        }
+    }
 }
