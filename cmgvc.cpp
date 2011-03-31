@@ -29,6 +29,8 @@ void ExpansionDynamique (CMatriMage * im, CImage * masque)
     float ValMin,ValMax, R, G, B;
     int first = 1;
 
+
+    // double boucle de recherche des valeurs maximale et minimale dans l'image au niveau du masque
     for (int j = 0; j < im->height; ++j)
     {
         for (int i = 0; i < im->width; ++i)
@@ -102,6 +104,8 @@ void CMgvc::appliquer(CImage *init, CImage *masque, CImage *out, float nb_iter, 
     float Br, Bg, Bb;	// Beta pour chaque canal
     float Gr, Gg, Gb;	// Norme du gradient pour chaque canal
 
+
+    // Recopie du masque sur l'image en entrée
     for (int y = 0; y < init->height(); ++y)
     {
         for (int x = 0; x < init->width(); ++x)
@@ -115,13 +119,17 @@ void CMgvc::appliquer(CImage *init, CImage *masque, CImage *out, float nb_iter, 
         }
     }
 
+
     for (int n = 0; n < nb_iter; ++n)
     {
         this->progressbar->setValue(this->progressbar->value()+1);//incremente la progressbar
 
+        // copie de l'image resultat dans l'image temporaire
         temp->Copy(res);
 
+        // Calcul du laplacien
         Laplacien->Laplacien(temp);
+        // Calcul  des composantes en X et Y du gradient
         Gradient->Gradient(temp, SobelX, SobelY);
 
 
@@ -129,24 +137,30 @@ void CMgvc::appliquer(CImage *init, CImage *masque, CImage *out, float nb_iter, 
         {
             for (int i = 0; i < masque->width(); ++i)
             {
+                // Le traitement est effectué si le pixel parcouru est recouvert par le masque
                 if (masque->getPixel(i, j) == qRgba(0, 0, 0, 255))
                 {
+                    // Calcul des deltaL (correspond à la formule (7) page 4 du pdf)
                     deltaLr.SetVal(Laplacien->GetVal(i+1,j,0) - Laplacien->GetVal(i-1,j,0), Laplacien->GetVal(i,j+1,0) - Laplacien->GetVal(i,j-1,0));
                     deltaLg.SetVal(Laplacien->GetVal(i+1,j,1) - Laplacien->GetVal(i-1,j,1), Laplacien->GetVal(i,j+1,1) - Laplacien->GetVal(i,j-1,1));
                     deltaLb.SetVal(Laplacien->GetVal(i+1,j,2) - Laplacien->GetVal(i-1,j,2), Laplacien->GetVal(i,j+1,2) - Laplacien->GetVal(i,j-1,2));
 
+                    // Calcul des vecteurs Nr, Ng et Nb (correspond à une partie de la formule (9) page 4 du pdf)
                     Nr.SetVal(-(SobelY->GetVal(i,j, 0)), SobelX->GetVal(i,j, 0));
                     Ng.SetVal(-(SobelY->GetVal(i,j, 1)), SobelX->GetVal(i,j, 1));
                     Nb.SetVal(-(SobelY->GetVal(i,j, 2)), SobelX->GetVal(i,j, 2));
 
+                    // Normalisation des vecteurs Nr, Ng et Nb (correspond à l'autre partie de la formule (9) page 4 du pdf)
                     Nr/(Nr.GetNorm()+0.000000001);
                     Ng/(Ng.GetNorm()+0.000000001);
                     Nb/(Nb.GetNorm()+0.000000001);
 
+                    // Calcul des valeurs des beta pour chaque canal (correspond à la formule (10) page 4 du pdf)
                     Br = deltaLr*Nr;
                     Bg = deltaLg*Ng;
                     Bb = deltaLb*Nb;
 
+                    // Calcul de la norme du gradient pour le canal rouge (correspond à la formule (11) page 4 du pdf)
                     if ( Br >= 0.0)
                     {
                         float bX = min(temp->GetVal(i+1,j,0) - temp->GetVal(i,j,0), temp->GetVal(i,j,0) - temp->GetVal(i-1,j,0));
@@ -168,6 +182,7 @@ void CMgvc::appliquer(CImage *init, CImage *masque, CImage *out, float nb_iter, 
                         Gr = sqrt( pow(bX,2) + pow(fX,2) + pow(bY,2) + pow(fY,2));
                     }
 
+                    // Calcul de la norme du gradient pour le canal vert (correspond à la formule (11) page 4 du pdf)
                     if ( Bg >= 0.0)
                     {
                         int bX = min(temp->GetVal(i+1,j,1) - temp->GetVal(i,j,1), temp->GetVal(i,j,1) - temp->GetVal(i-1,j,1));
@@ -189,6 +204,7 @@ void CMgvc::appliquer(CImage *init, CImage *masque, CImage *out, float nb_iter, 
                         Gg = sqrt( pow(bX,2) + pow(fX,2) + pow(bY,2) + pow(fY,2));
                     }
 
+                    // Calcul de la norme du gradient pour le canal bleu (correspond à la formule (11) page 4 du pdf)
                     if ( Bb >= 0.0)
                     {
                         int bX = min(temp->GetVal(i+1,j,2) - temp->GetVal(i,j,2), temp->GetVal(i,j,2) - temp->GetVal(i-1,j,2));
@@ -211,7 +227,7 @@ void CMgvc::appliquer(CImage *init, CImage *masque, CImage *out, float nb_iter, 
                     }
 
 
-
+                    //Calcule de la nouvel valeur du pixel courant (correspond aux formules (5) et (6) page 4 du pdf)
                     R = temp->GetVal(i,j,0) + delta_t*(Br*Gr);
                     G = temp->GetVal(i,j,1) + delta_t*(Bg*Gg);
                     B = temp->GetVal(i,j,2) + delta_t*(Bb*Gb);
@@ -224,6 +240,7 @@ void CMgvc::appliquer(CImage *init, CImage *masque, CImage *out, float nb_iter, 
         }
         ExpansionDynamique(res, masque);
     }
+    // Copie de l'image résultante dans l'image de sortie
     out->Copy(res->GetQImage());
 
 }
