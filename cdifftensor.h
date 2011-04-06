@@ -1,9 +1,23 @@
+/**
+ * @file cdifftensor.h
+ * @brief Classe CDiffTensor
+ * @author Simon Reynard, Yoan Vergeot
+ * @date 2010-2011
+ *
+ * Description de la classe CDiffTensor, calcul du tenseur de diffusion
+ *
+ */
 #ifndef CDIFFTENSOR_H
 #define CDIFFTENSOR_H
 
 #include "cimage.h"
 #include <QDebug>
 
+/** @class CDiffTensor
+ * @brief calcul tenseur de dffusion
+ *
+ * Classe permettant de calculer le tenseur de dissusion pour un pixel d'une image
+ */
 class CDiffTensor
 {
 public:

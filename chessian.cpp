@@ -1,3 +1,12 @@
+/**
+ * @file chessian.cpp
+ * @brief Methodes de la classe CHessian
+ * @author Simon Reynard, Yoan Vergeot
+ * @date 2010-2011
+ *
+ * Methodes de la classe CHessian
+ *
+ */
 #include "chessian.h"
 
 /**

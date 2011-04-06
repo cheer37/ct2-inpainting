@@ -1,5 +1,13 @@
+/**
+ * @file ctschumperle.cpp
+ * @brief Methodes de la classe CTschumperle
+ * @author Simon Reynard, Yoan Vergeot
+ * @date 2010-2011
+ *
+ * Methodes de la classe CTschumperle
+ *
+ */
 #include "ctschumperle.h"
-#include <iostream>
 
 /**
 * @fn CTschumperle constructeur

@@ -1,3 +1,12 @@
+/**
+ * @file cdifftensor.cpp
+ * @brief Methodes de la classe @see CDiffTensor
+ * @author Simon Reynard, Yoan Vergeot
+ * @date 2010-2011
+ *
+ * Methodes de la classe CDiffTensor
+ *
+ */
 #include "cdifftensor.h"
 
 /**

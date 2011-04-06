@@ -1,3 +1,12 @@
+/**
+ * @file ctschumperle.h
+ * @brief Classe CTschumperle
+ * @author Simon Reynard, Yoan Vergeot
+ * @date 2010-2011
+ *
+ * Description de la classe CDiffTensor, methode d'inpainting de Tschumperle
+ *
+ */
 #ifndef CTSCHUMPERLE_H
 #define CTSCHUMPERLE_H
 
@@ -7,6 +16,11 @@
 #include <QProgressBar>
 #include <QDebug>
 
+/** @class CTschumperle
+ * @brief application d'inpainting
+ *
+ * Classe permettant d'effectuer un inpainting sur une image
+ */
 class CTschumperle
 {
 public:
