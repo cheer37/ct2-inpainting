@@ -36,9 +36,6 @@ class CImage : public QGraphicsItem
         void Copy(CImage * in);
         void Copy(QImage * in);
 
-        QImage Laplacien();
-        QImage Gradient();
-
     private:
         void mousePressEvent(QGraphicsSceneMouseEvent *event);
         void mouseMoveEvent (QGraphicsSceneMouseEvent * event);
