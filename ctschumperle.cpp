@@ -1,6 +1,6 @@
 /**
  * @file ctschumperle.cpp
- * @brief Methodes de la classe CTschumperle
+ * @brief Methodes de la classe @see CTschumperle
  * @author Simon Reynard, Yoan Vergeot
  * @date 2010-2011
  *

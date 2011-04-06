@@ -1,6 +1,6 @@
 /**
  * @file chessian.cpp
- * @brief Methodes de la classe CHessian
+ * @brief Methodes de la classe @see CHessian
  * @author Simon Reynard, Yoan Vergeot
  * @date 2010-2011
  *
