@@ -1,11 +1,19 @@
 #include "ctschumperle.h"
 #include <iostream>
 
+/**
+* @fn CTschumperle constructeur
+*/
 CTschumperle::CTschumperle()
 {
 
 }
 
+/**
+* @fn appliquer Applique l'inpainting sur une image
+* @param init image initiale, masque image correspodant au masque, out image resultat,
+*        _iteration nb d'iterations a effectuer, dt delta t
+*/
 void CTschumperle::appliquer(CImage *init, CImage *masque, CImage *out, float _iteration, float dt)
 {
     this->progressbar->setMaximum(_iteration);//initialise la progressbar
@@ -35,16 +43,18 @@ void CTschumperle::appliquer(CImage *init, CImage *masque, CImage *out, float _i
             {
                 if (masque->getPixel(i, j) == qRgba(0, 0, 0, 255))
                 {
+                    /*Calcul de la hessienne pr un pixel du masque */
                     double *H_r = CHessian::GetHessian(I_tmp, i, j, 0);
                     double *H_g = CHessian::GetHessian(I_tmp, i, j, 1);
                     double *H_b = CHessian::GetHessian(I_tmp, i, j, 2);
 
+                    /*Calcul du tenseur de diffusion*/
                     CDiffTensor T = CDiffTensor(I_tmp, i, j);
                     double *D_r = T.GetDiffTensor_r();
                     double *D_g = T.GetDiffTensor_g();
-                    double *D_b = T.GetDiffTensor_b();
+                    double *D_b = T.GetDiffTensor_b();/*AJOUTER GAUSSIENE SUR LES MATRICES 'D' */
 
-                    /*AJOUTER GAUSSIENE SUR LES MATRICES 'D' */
+                    /*Calcul de la matrice D.H*/
                     double Mat_res_r[4];
                     double Mat_res_g[4];
                     double Mat_res_b[4];
@@ -82,6 +92,7 @@ void CTschumperle::appliquer(CImage *init, CImage *masque, CImage *out, float _i
                              << " Val px G: " << (dt*(Mat_res_g[0]+Mat_res_g[3]))
                              << " Val px B: " << (dt*(Mat_res_b[0]+Mat_res_b[3])) << '\n';*/
 
+                    /*Calcul de la valeur a ajouter au pixel avec dt*trace(DH)*/
                     out->setPixel(i, j, qRgb(I_tmp->getRedPixel(i, j)+(dt*(Mat_res_r[0]+Mat_res_r[3])), I_tmp->getGreenPixel(i, j)+(dt*(Mat_res_g[0]+Mat_res_g[3])), I_tmp->getBluePixel(i, j)+(dt*(Mat_res_b[0]+Mat_res_b[3]))));
                 }
             }
@@ -90,6 +101,10 @@ void CTschumperle::appliquer(CImage *init, CImage *masque, CImage *out, float _i
     }
 }
 
+/**
+* @fn set_progressbar affecte la progressBar afin de la faire evoluer
+* @param bar pointeur vers la progressBar en question
+*/
 void CTschumperle::set_progressbar(QProgressBar * bar)
 {
     this->progressbar = bar;
