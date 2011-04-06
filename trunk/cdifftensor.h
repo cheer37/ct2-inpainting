@@ -2,6 +2,7 @@
 #define CDIFFTENSOR_H
 
 #include "cimage.h"
+#include <QDebug>
 
 class CDiffTensor
 {
