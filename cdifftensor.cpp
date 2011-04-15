@@ -26,11 +26,11 @@ CDiffTensor::CDiffTensor(CImage * _img, int _x, int _y)
     double * StrucTensor_g = new double[4];
     double * StrucTensor_b = new double[4];
 
-    StrucTensor_r = this->GetStrucTensor(_img, _x, _y, 0);
-    StrucTensor_g = this->GetStrucTensor(_img, _x, _y, 1);
-    StrucTensor_b = this->GetStrucTensor(_img, _x, _y, 2);
+    this->GetStrucTensor(_img, _x, _y, 0, StrucTensor_r);
+    this->GetStrucTensor(_img, _x, _y, 1, StrucTensor_g);
+    this->GetStrucTensor(_img, _x, _y, 2, StrucTensor_b);
 
-    qDebug() << " StrucTensor R: [" << StrucTensor_r[0] << "," <<  StrucTensor_r[1] << "," <<  StrucTensor_r[2] << "," <<  StrucTensor_r[3] << "]\n";
+    /*qDebug() << " StrucTensor R: [" << StrucTensor_r[0] << "," <<  StrucTensor_r[1] << "," <<  StrucTensor_r[2] << "," <<  StrucTensor_r[3] << "]\n";*/
 
     /*Calcul du tenseur de diffusion pour chaque canal*/
     double Lambda_p, Lambda_m, det, a, b, c, tmp_mult;
@@ -38,7 +38,7 @@ CDiffTensor::CDiffTensor(CImage * _img, int _x, int _y)
     double teta_m[2];
 
     /*****************Pour le canal R*********************/
-    qDebug() << "TENSEUR DE STRUCTURE RED: " <<StrucTensor_g[0] << " " <<StrucTensor_g[1] << " " <<StrucTensor_g[2] << " " <<StrucTensor_g[3] << "\n";
+   /* qDebug() << "TENSEUR DE STRUCTURE RED: " <<StrucTensor_g[0] << " " <<StrucTensor_g[1] << " " <<StrucTensor_g[2] << " " <<StrucTensor_g[3] << "\n";*/
 
     /*Calcul des valeurs propres lambda+- */
     a = 1;
@@ -48,7 +48,7 @@ CDiffTensor::CDiffTensor(CImage * _img, int _x, int _y)
 
     Lambda_p = (-b+sqrt(det))/(2*a);
     Lambda_m = (-b-sqrt(det))/(2*a);
-    qDebug() << "a: " << a << " b: " << b << " c: " << c << " det: " << det << " lambda p: " << Lambda_p << " lambda m: " << Lambda_m << '\n';
+    /*qDebug() << "a: " << a << " b: " << b << " c: " << c << " det: " << det << " lambda p: " << Lambda_p << " lambda m: " << Lambda_m << '\n';*/
         /*Si lambda+ < lambda- on echange */
     if (Lambda_m > Lambda_p)
     {
@@ -89,7 +89,7 @@ CDiffTensor::CDiffTensor(CImage * _img, int _x, int _y)
     //qDebug() << " a: " << a << " b: " << b << " c: " << c <<" lambda-p :" << Lambda_p << " lambda-m :" << Lambda_m << " tmp_multp r: " << tmp_mult << '\n';
 
     /*Calcul du tenseur de diffusion final*/
-    this->DTMat_r = this->CalcDiffTensMat(teta_m, tmp_mult);
+    this->CalcDiffTensMat(teta_m, tmp_mult, this->DTMat_r);
 
     /*****************************************************/
 
@@ -143,7 +143,7 @@ CDiffTensor::CDiffTensor(CImage * _img, int _x, int _y)
     //qDebug() << " a: " << a << " b: " << b << " c: " << c <<" lambda-p :" << Lambda_p << " lambda-m :" << Lambda_m << " tmp_multp r: " << tmp_mult << '\n';
 
     /*Calcul du tenseur de diffusion final*/
-    this->DTMat_g = this->CalcDiffTensMat(teta_m, tmp_mult);
+    this->CalcDiffTensMat(teta_m, tmp_mult, this->DTMat_g);
 
     /*****************************************************/
 
@@ -198,9 +198,20 @@ CDiffTensor::CDiffTensor(CImage * _img, int _x, int _y)
     //qDebug() << " a: " << a << " b: " << b << " c: " << c <<" lambda-p :" << Lambda_p << " lambda-m :" << Lambda_m << " tmp_multp r: " << tmp_mult << '\n';
 
     /*Calcul du tenseur de diffusion final*/
-    this->DTMat_b = this->CalcDiffTensMat(teta_m, tmp_mult);
+    this->CalcDiffTensMat(teta_m, tmp_mult, this->DTMat_b);
 
     /*****************************************************/
+
+    delete StrucTensor_r;
+    delete StrucTensor_g;
+    delete StrucTensor_b;
+}
+
+CDiffTensor::~CDiffTensor()
+{
+    delete this->DTMat_r;
+    delete this->DTMat_g;
+    delete this->DTMat_b;
 }
 
 /**
@@ -209,16 +220,14 @@ CDiffTensor::CDiffTensor(CImage * _img, int _x, int _y)
 * @param teta_m vecteur propre-, tmp_mult coeff dependant des valeurs propres
 * @return double * matrice 2x2
 */
-double * CDiffTensor::CalcDiffTensMat(double * teta_m, double tmp_mult)
+void CDiffTensor::CalcDiffTensMat(double * teta_m, double tmp_mult, double *mat_res)
 {
-    double * mat_res = new double[4];
     /*Multiplication du vecteur propre par son transpose afin d'avoir une matrice 2x2*/
     mat_res[0] = tmp_mult*teta_m[0]*teta_m[0];
     mat_res[1] = tmp_mult*teta_m[1]*teta_m[0];
     mat_res[2] = tmp_mult*teta_m[0]*teta_m[1];
     mat_res[3] = tmp_mult*teta_m[1]*teta_m[1];
 
-    return mat_res;
 }
 
 /**
@@ -227,7 +236,7 @@ double * CDiffTensor::CalcDiffTensMat(double * teta_m, double tmp_mult)
 * @param _img image a traiter, _x coord x du pixel, _y coord y du pixel, _canal canal a traiter
 * @return double * matrice 2x2
 */
-double * CDiffTensor::GetStrucTensor(CImage * _img, int _x, int _y, int _canal)
+void CDiffTensor::GetStrucTensor(CImage * _img, int _x, int _y, int _canal, double * mat_res)
 {
     /*float  SobelX [] = {-1.0, 0.0, 1.0,
                         -2.0, 0.0, 2.0,
@@ -237,7 +246,7 @@ double * CDiffTensor::GetStrucTensor(CImage * _img, int _x, int _y, int _canal)
                         0.0, 0.0, 0.0,
                         1.0, 2.0, 1.0};*/
     double ValX = 0, ValY = 0;
-    double * mat_res = new double [4];
+
     /*int cpt = 0;*/
     mat_res[0] = 0.0;
     mat_res[1] = 0.0;
@@ -354,7 +363,6 @@ double * CDiffTensor::GetStrucTensor(CImage * _img, int _x, int _y, int _canal)
              }
         }
     }
-    return mat_res;
 }
 
 /**
