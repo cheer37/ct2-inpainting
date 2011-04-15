@@ -151,9 +151,9 @@ void CMgvc::appliquer(CImage *init, CImage *masque, CImage *out, float nb_iter, 
                     Nb.SetVal(-(SobelY->GetVal(i,j, 2)), SobelX->GetVal(i,j, 2));
 
                     // Normalisation des vecteurs Nr, Ng et Nb (correspond à l'autre partie de la formule (9) page 4 du pdf)
-                    Nr/(Nr.GetNorm()+0.000000001);
-                    Ng/(Ng.GetNorm()+0.000000001);
-                    Nb/(Nb.GetNorm()+0.000000001);
+                    Nr/(pow(Nr.GetNorm(),2)+0.000000001);
+                    Ng/(pow(Ng.GetNorm(),2)+0.000000001);
+                    Nb/(pow(Nb.GetNorm(),2)+0.000000001);
 
                     // Calcul des valeurs des beta pour chaque canal (correspond à la formule (10) page 4 du pdf)
                     Br = deltaLr*Nr;
@@ -163,21 +163,21 @@ void CMgvc::appliquer(CImage *init, CImage *masque, CImage *out, float nb_iter, 
                     // Calcul de la norme du gradient pour le canal rouge (correspond à la formule (11) page 4 du pdf)
                     if ( Br >= 0.0)
                     {
-                        float bX = min(temp->GetVal(i+1,j,0) - temp->GetVal(i,j,0), temp->GetVal(i,j,0) - temp->GetVal(i-1,j,0));
-                        float fX = max(temp->GetVal(i,j,0) - temp->GetVal(i+1,j,0), temp->GetVal(i-1,j,0) - temp->GetVal(i,j,0));
+                        float bX = min(temp->GetVal(i+1,j,0) - temp->GetVal(i,j,0), 0.0);
+                        float fX = max(temp->GetVal(i,j,0) - temp->GetVal(i+1,j,0), 0.0);
 
-                        float bY = min(temp->GetVal(i,j+1,0) - temp->GetVal(i,j,0), temp->GetVal(i,j,0) - temp->GetVal(i,j-1,0));
-                        float fY = max(temp->GetVal(i,j,0) - temp->GetVal(i,j+1,0), temp->GetVal(i,j-1,0) - temp->GetVal(i,j,0));
+                        float bY = min(temp->GetVal(i,j+1,0) - temp->GetVal(i,j,0), 0.0);
+                        float fY = max(temp->GetVal(i,j,0) - temp->GetVal(i,j+1,0), 0.0);
 
                         Gr = sqrt( pow(bX,2) + pow(fX,2) + pow(bY,2) + pow(fY,2));
                     }
                     else
                     {
-                        float bX = max(temp->GetVal(i+1,j,0) - temp->GetVal(i,j,0), temp->GetVal(i,j,0) - temp->GetVal(i-1,j,0));
-                        float fX = min(temp->GetVal(i,j,0) - temp->GetVal(i+1,j,0), temp->GetVal(i-1,j,0) - temp->GetVal(i,j,0));
+                        float bX = max(temp->GetVal(i+1,j,0) - temp->GetVal(i,j,0), 0.0);
+                        float fX = min(temp->GetVal(i,j,0) - temp->GetVal(i+1,j,0), 0.0);
 
-                        float bY = max(temp->GetVal(i,j+1,0) - temp->GetVal(i,j,0), temp->GetVal(i,j,0) - temp->GetVal(i,j-1,0));
-                        float fY = min(temp->GetVal(i,j,0) - temp->GetVal(i,j+1,0), temp->GetVal(i,j-1,0) - temp->GetVal(i,j,0));
+                        float bY = max(temp->GetVal(i,j+1,0) - temp->GetVal(i,j,0), 0.0);
+                        float fY = min(temp->GetVal(i,j,0) - temp->GetVal(i,j+1,0), 0.0);
 
                         Gr = sqrt( pow(bX,2) + pow(fX,2) + pow(bY,2) + pow(fY,2));
                     }
@@ -185,21 +185,21 @@ void CMgvc::appliquer(CImage *init, CImage *masque, CImage *out, float nb_iter, 
                     // Calcul de la norme du gradient pour le canal vert (correspond à la formule (11) page 4 du pdf)
                     if ( Bg >= 0.0)
                     {
-                        int bX = min(temp->GetVal(i+1,j,1) - temp->GetVal(i,j,1), temp->GetVal(i,j,1) - temp->GetVal(i-1,j,1));
-                        int fX = max(temp->GetVal(i,j,1) - temp->GetVal(i+1,j,1), temp->GetVal(i-1,j,1) - temp->GetVal(i,j,1));
+                        float bX = min(temp->GetVal(i+1,j,1) - temp->GetVal(i,j,1), 0.0);
+                        float fX = max(temp->GetVal(i,j,1) - temp->GetVal(i+1,j,1), 0.0);
 
-                        int bY = min(temp->GetVal(i,j+1,1) - temp->GetVal(i,j,1), temp->GetVal(i,j,1) - temp->GetVal(i,j-1,1));
-                        int fY = max(temp->GetVal(i,j,1) - temp->GetVal(i,j+1,1), temp->GetVal(i,j-1,1) - temp->GetVal(i,j,1));
+                        float bY = min(temp->GetVal(i,j+1,1) - temp->GetVal(i,j,1), 0.0);
+                        float fY = max(temp->GetVal(i,j,1) - temp->GetVal(i,j+1,1), 0.0);
 
                         Gg = sqrt( pow(bX,2) + pow(fX,2) + pow(bY,2) + pow(fY,2));
                     }
                     else
                     {
-                        int bX = max(temp->GetVal(i+1,j,1) - temp->GetVal(i,j,1), temp->GetVal(i,j,1) - temp->GetVal(i-1,j,1));
-                        int fX = min(temp->GetVal(i,j,1) - temp->GetVal(i+1,j,1), temp->GetVal(i-1,j,1) - temp->GetVal(i,j,1));
+                        float bX = max(temp->GetVal(i+1,j,1) - temp->GetVal(i,j,1), 0.0);
+                        float fX = min(temp->GetVal(i,j,1) - temp->GetVal(i+1,j,1), 0.0);
 
-                        int bY = max(temp->GetVal(i,j+1,1) - temp->GetVal(i,j,1), temp->GetVal(i,j,1) - temp->GetVal(i,j-1,1));
-                        int fY = min(temp->GetVal(i,j,1) - temp->GetVal(i,j+1,1), temp->GetVal(i,j-1,1) - temp->GetVal(i,j,1));
+                        float bY = max(temp->GetVal(i,j+1,1) - temp->GetVal(i,j,1), 0.0);
+                        float fY = min(temp->GetVal(i,j,1) - temp->GetVal(i,j+1,1), 0.0);
 
                         Gg = sqrt( pow(bX,2) + pow(fX,2) + pow(bY,2) + pow(fY,2));
                     }
@@ -207,21 +207,21 @@ void CMgvc::appliquer(CImage *init, CImage *masque, CImage *out, float nb_iter, 
                     // Calcul de la norme du gradient pour le canal bleu (correspond à la formule (11) page 4 du pdf)
                     if ( Bb >= 0.0)
                     {
-                        int bX = min(temp->GetVal(i+1,j,2) - temp->GetVal(i,j,2), temp->GetVal(i,j,2) - temp->GetVal(i-1,j,2));
-                        int fX = max(temp->GetVal(i,j,2) - temp->GetVal(i+1,j,2), temp->GetVal(i-1,j,2) - temp->GetVal(i,j,2));
+                        float bX = min(temp->GetVal(i+1,j,2) - temp->GetVal(i,j,2), 0.0);
+                        float fX = max(temp->GetVal(i,j,2) - temp->GetVal(i+1,j,2), 0.0);
 
-                        int bY = min(temp->GetVal(i,j+1,2) - temp->GetVal(i,j,2), temp->GetVal(i,j,2) - temp->GetVal(i,j-1,2));
-                        int fY = max(temp->GetVal(i,j,2) - temp->GetVal(i,j+1,2), temp->GetVal(i,j-1,2) - temp->GetVal(i,j,2));
+                        float bY = min(temp->GetVal(i,j+1,2) - temp->GetVal(i,j,2), 0.0);
+                        float fY = max(temp->GetVal(i,j,2) - temp->GetVal(i,j+1,2), 0.0);
 
                         Gb = sqrt( pow(bX,2) + pow(fX,2) + pow(bY,2) + pow(fY,2));
                     }
                     else
                     {
-                        int bX = max(temp->GetVal(i+1,j,2) - temp->GetVal(i,j,2), temp->GetVal(i,j,2) - temp->GetVal(i-1,j,2));
-                        int fX = min(temp->GetVal(i,j,2) - temp->GetVal(i+1,j,2), temp->GetVal(i-1,j,2) - temp->GetVal(i,j,2));
+                        float bX = max(temp->GetVal(i+1,j,2) - temp->GetVal(i,j,2), 0.0);
+                        float fX = min(temp->GetVal(i,j,2) - temp->GetVal(i+1,j,2), 0.0);
 
-                        int bY = max(temp->GetVal(i,j+1,2) - temp->GetVal(i,j,2), temp->GetVal(i,j,2) - temp->GetVal(i,j-1,2));
-                        int fY = min(temp->GetVal(i,j,2) - temp->GetVal(i,j+1,2), temp->GetVal(i,j-1,2) - temp->GetVal(i,j,2));
+                        float bY = max(temp->GetVal(i,j+1,2) - temp->GetVal(i,j,2), 0.0);
+                        float fY = min(temp->GetVal(i,j,2) - temp->GetVal(i,j+1,2), 0.0);
 
                         Gb = sqrt( pow(bX,2) + pow(fX,2) + pow(bY,2) + pow(fY,2));
                     }
@@ -238,8 +238,8 @@ void CMgvc::appliquer(CImage *init, CImage *masque, CImage *out, float nb_iter, 
                 }
             }
         }
-        ExpansionDynamique(res, masque);
     }
+//    ExpansionDynamique(res, masque);
     // Copie de l'image résultante dans l'image de sortie
     out->Copy(res->GetQImage());
 
