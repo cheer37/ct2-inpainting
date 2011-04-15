@@ -38,16 +38,17 @@ CDiffTensor::CDiffTensor(CImage * _img, int _x, int _y)
     double teta_m[2];
 
     /*****************Pour le canal R*********************/
+    qDebug() << "TENSEUR DE STRUCTURE RED: " <<StrucTensor_g[0] << " " <<StrucTensor_g[1] << " " <<StrucTensor_g[2] << " " <<StrucTensor_g[3] << "\n";
 
     /*Calcul des valeurs propres lambda+- */
     a = 1;
-    b = StrucTensor_r[0] - StrucTensor_r[3];
+    b = -StrucTensor_r[0] - StrucTensor_r[3];
     c = (StrucTensor_r[0]*StrucTensor_r[3]) - (StrucTensor_r[1]*StrucTensor_r[2]);
     det = pow(b, 2)-4*(a*c);
 
     Lambda_p = (-b+sqrt(det))/(2*a);
     Lambda_m = (-b-sqrt(det))/(2*a);
-
+    qDebug() << "a: " << a << " b: " << b << " c: " << c << " det: " << det << " lambda p: " << Lambda_p << " lambda m: " << Lambda_m << '\n';
         /*Si lambda+ < lambda- on echange */
     if (Lambda_m > Lambda_p)
     {
@@ -85,7 +86,7 @@ CDiffTensor::CDiffTensor(CImage * _img, int _x, int _y)
     /*Calcul du coefficient tmp_mult*/
     tmp_mult = 1/(sqrt(1+Lambda_m+Lambda_p));
 
-    qDebug() << " a: " << a << " b: " << b << " c: " << c <<" lambda-p :" << Lambda_p << " lambda-m :" << Lambda_m << " tmp_multp r: " << tmp_mult << '\n';
+    //qDebug() << " a: " << a << " b: " << b << " c: " << c <<" lambda-p :" << Lambda_p << " lambda-m :" << Lambda_m << " tmp_multp r: " << tmp_mult << '\n';
 
     /*Calcul du tenseur de diffusion final*/
     this->DTMat_r = this->CalcDiffTensMat(teta_m, tmp_mult);
@@ -96,7 +97,7 @@ CDiffTensor::CDiffTensor(CImage * _img, int _x, int _y)
 
     /*Calcul des valeurs propres lambda+- */
     a = 1;
-    b = StrucTensor_g[0] - StrucTensor_g[3];
+    b = -StrucTensor_g[0] - StrucTensor_g[3];
     c = (StrucTensor_g[0]*StrucTensor_g[3]) - (StrucTensor_g[1]*StrucTensor_g[2]);
     det = pow(b, 2)-4*(a*c);
 
@@ -139,7 +140,6 @@ CDiffTensor::CDiffTensor(CImage * _img, int _x, int _y)
 
     /*Calcul du coefficient tmp_mult*/
     tmp_mult = 1/(sqrt(1+Lambda_m+Lambda_p));
-
     //qDebug() << " a: " << a << " b: " << b << " c: " << c <<" lambda-p :" << Lambda_p << " lambda-m :" << Lambda_m << " tmp_multp r: " << tmp_mult << '\n';
 
     /*Calcul du tenseur de diffusion final*/
@@ -151,7 +151,7 @@ CDiffTensor::CDiffTensor(CImage * _img, int _x, int _y)
 
     /*Calcul des valeurs propres lambda+- */
     a = 1;
-    b = StrucTensor_b[0] - StrucTensor_b[3];
+    b = -StrucTensor_b[0] - StrucTensor_b[3];
     c = (StrucTensor_b[0]*StrucTensor_b[3]) - (StrucTensor_b[1]*StrucTensor_b[2]);
     det = pow(b, 2)-4*(a*c);
 
