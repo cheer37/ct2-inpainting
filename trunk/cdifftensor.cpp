@@ -37,8 +37,12 @@ CDiffTensor::CDiffTensor(CImageDouble * _img, int _x, int _y)
     double teta_p[2];
     double teta_m[2];
 
+
+    /*qDebug() << "TENSEUR DE STRUCTURE RED: " <<StrucTensor_r[0] << " " <<StrucTensor_r[1] << " " <<StrucTensor_r[2] << " " <<StrucTensor_r[3] << "\n";
+    qDebug() << "TENSEUR DE STRUCTURE GREEN: " <<StrucTensor_g[0] << " " <<StrucTensor_g[1] << " " <<StrucTensor_g[2] << " " <<StrucTensor_g[3] << "\n";
+    qDebug() << "TENSEUR DE STRUCTURE BLUE: " <<StrucTensor_b[0] << " " <<StrucTensor_b[1] << " " <<StrucTensor_b[2] << " " <<StrucTensor_b[3] << "\n";*/
     /*****************Pour le canal R*********************/
-   qDebug() << "TENSEUR DE STRUCTURE RED: " <<StrucTensor_g[0] << " " <<StrucTensor_g[1] << " " <<StrucTensor_g[2] << " " <<StrucTensor_g[3] << "\n";
+
 
     /*Calcul des valeurs propres lambda+- */
     a = 1.0;
@@ -48,7 +52,7 @@ CDiffTensor::CDiffTensor(CImageDouble * _img, int _x, int _y)
 
     Lambda_p = (-b+sqrt(det))/(2.0*a);
     Lambda_m = (-b-sqrt(det))/(2.0*a);
-    qDebug() << "a: " << a << " b: " << b << " c: " << c << " det: " << det << " lambda p: " << Lambda_p << " lambda m: " << Lambda_m << '\n';
+
         /*Si lambda+ < lambda- on echange */
     if (Lambda_m > Lambda_p)
     {
@@ -245,7 +249,7 @@ void CDiffTensor::GetStrucTensor(CImageDouble * _img, int _x, int _y, int _canal
     float  SobelY [] = {-1.0, -2.0, -1.0,
                         0.0, 0.0, 0.0,
                         1.0, 2.0, 1.0};*/
-    double ValX = 0, ValY = 0;
+    double ValX = 0.0, ValY = 0.0;
 
     /*int cpt = 0;*/
     mat_res[0] = 0.0;
