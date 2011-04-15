@@ -26,25 +26,32 @@ void CTschumperle::appliquer(CImage *init, CImage *masque, CImage *out, float _i
 {
     this->progressbar->setMaximum(_iteration);//initialise la progressbar
 
-    CImage *I_tmp = new CImage(init->width(), init->height(), 0);
-    out->Copy(init);
+    qDebug() << "Debut tschump\n";
 
+    CImageDouble *I_tmp = new CImageDouble(init);
+    CImageDouble *Out_tmp = new CImageDouble(init);
+
+    /*Out_tmp->Copy(init);*/
+    qDebug() << "1\n";
     for (int y = 0; y < init->height(); ++y)
     {
         for (int x = 0; x < init->width(); ++x)
         {
             if (masque->getPixel(x, y) == qRgba(0, 0, 0, 255))
             {
-                out->setPixel(x, y, qRgb(0, 0, 0));
+                Out_tmp->setRedPixel(x, y, 0.0);
+                Out_tmp->setGreenPixel(x, y, 0.0);
+                Out_tmp->setBluePixel(x, y, 0.0);
             }
         }
     }
 
+    qDebug() << "2\n";
     for (int it = 0; it < _iteration; ++it)
     {
         this->progressbar->setValue(this->progressbar->value()+1);//incremente la progressbar
 
-        I_tmp->Copy(out);
+        I_tmp->Copy(Out_tmp);
         for (int j = 0; j < masque->height(); ++j)
         {
             for (int i = 0; i < masque->width(); ++i)
@@ -82,26 +89,40 @@ void CTschumperle::appliquer(CImage *init, CImage *masque, CImage *out, float _i
                     Mat_res_b[2] = D_b[2]*H_b[0]+D_b[3]*H_b[2];
                     Mat_res_b[3] = D_b[2]*H_b[1]+D_b[3]*H_b[3];
 
-                    /*qDebug() << " DiffTensor R: [" << D_r[0] << "," <<  D_r[1] << "," <<  D_r[2] << "," <<  D_r[3] << "]\n"
+                    qDebug() << " DiffTensor R: [" << D_r[0] << "," <<  D_r[1] << "," <<  D_r[2] << "," <<  D_r[3] << "]\n"
                              << "Hessian    R: [" << H_r[0] << "," <<  H_r[1] << "," <<  H_r[2] << "," <<  H_r[3] << "]\n"
-                             << "MatRes     R: [" << Mat_res_r[0] << "," <<  Mat_res_r[1] << "," <<  Mat_res_r[2] << "," <<  Mat_res_r[3] << "]\n";*/
-                             /*<< "DiffTensor G: [" << D_g[0] << "," <<  D_g[1] << "," <<  D_g[2] << "," <<  D_g[3] << "]\n"
+                             << "MatRes     R: [" << Mat_res_r[0] << "," <<  Mat_res_r[1] << "," <<  Mat_res_r[2] << "," <<  Mat_res_r[3] << "]\n"
+                             << "DiffTensor G: [" << D_g[0] << "," <<  D_g[1] << "," <<  D_g[2] << "," <<  D_g[3] << "]\n"
                              << "Hessian    G: [" << H_g[0] << "," <<  H_g[1] << "," <<  H_g[2] << "," <<  H_g[3] << "]\n"
                              << "MatRes     G: [" << Mat_res_g[0] << "," <<  Mat_res_g[1] << "," <<  Mat_res_g[2] << "," <<  Mat_res_g[3] << "]\n"
                              << "DiffTensor B: [" << D_b[0] << "," <<  D_b[1] << "," <<  D_b[2] << "," <<  D_b[3] << "]\n"
                              << "Hessian    B: [" << H_b[0] << "," <<  H_b[1] << "," <<  H_b[2] << "," <<  H_b[3] << "]\n"
-                             << "MatRes     B: [" << Mat_res_b[0] << "," <<  Mat_res_b[1] << "," <<  Mat_res_b[2] << "," <<  Mat_res_b[3] << "]\n"*/
+                             << "MatRes     B: [" << Mat_res_b[0] << "," <<  Mat_res_b[1] << "," <<  Mat_res_b[2] << "," <<  Mat_res_b[3] << "]\n";
 
 
-                    /*qDebug() << "Val px R: I_tmp->getRedPixel(i, j) : " << I_tmp->getRedPixel(i, j)
-                             << " + dt*(Mat_res_r[0]+Mat_res_r[3]) : " << dt*(Mat_res_r[0]+Mat_res_r[3])
+                    qDebug() << "Val px R: I_tmp->getRedPixel(i, j) : " << I_tmp->getRedPixel(i, j)
+                             << " + dt*(D.H) : " << dt*(Mat_res_r[0]+Mat_res_r[3])
                              << " = " << (I_tmp->getRedPixel(i, j)+(dt*(Mat_res_r[0]+Mat_res_r[3])))
-                            << "\n______________________________________________________\n";*//*
-                             << " Val px G: " << (dt*(Mat_res_g[0]+Mat_res_g[3]))
-                             << " Val px B: " << (dt*(Mat_res_b[0]+Mat_res_b[3])) << '\n';*/
+
+                             << "\nVal px G: I_tmp->getGreenPixel(i, j) : " << I_tmp->getGreenPixel(i, j)
+                             << " + dt*(D.H) : " << dt*(Mat_res_r[0]+Mat_res_r[3])
+                             << " = " << (I_tmp->getGreenPixel(i, j)+(dt*(Mat_res_r[0]+Mat_res_r[3])))
+
+                             << "\nVal px B: I_tmp->getBluePixel(i, j) : " << I_tmp->getBluePixel(i, j)
+                             << " + dt*(D.H) : " << dt*(Mat_res_r[0]+Mat_res_r[3])
+                             << " = " << (I_tmp->getBluePixel(i, j)+(dt*(Mat_res_r[0]+Mat_res_r[3])));
 
                     /*Calcul de la valeur a ajouter au pixel avec dt*trace(DH)*/
-                    out->setPixel(i, j, qRgb(I_tmp->getRedPixel(i, j)+(dt*(Mat_res_r[0]+Mat_res_r[3])), I_tmp->getGreenPixel(i, j)+(dt*(Mat_res_g[0]+Mat_res_g[3])), I_tmp->getBluePixel(i, j)+(dt*(Mat_res_b[0]+Mat_res_b[3]))));
+                    //out->setPixel(i, j, qRgb(I_tmp->getRedPixel(i, j)+(dt*(Mat_res_r[0]+Mat_res_r[3])), I_tmp->getGreenPixel(i, j)+(dt*(Mat_res_g[0]+Mat_res_g[3])), I_tmp->getBluePixel(i, j)+(dt*(Mat_res_b[0]+Mat_res_b[3]))));
+                    if ((dt*(Mat_res_r[0]+Mat_res_r[3])) == (dt*(Mat_res_r[0]+Mat_res_r[3])))
+                    {
+                        qDebug() << "\nOn ecrit";
+                        Out_tmp->setRedPixel(i, j, I_tmp->getRedPixel(i, j)+(dt*(Mat_res_r[0]+Mat_res_r[3])));
+                        Out_tmp->setGreenPixel(i, j, I_tmp->getGreenPixel(i, j)+(dt*(Mat_res_r[0]+Mat_res_r[3])));
+                        Out_tmp->setBluePixel(i, j, I_tmp->getBluePixel(i, j)+(dt*(Mat_res_r[0]+Mat_res_r[3])));
+                    }
+
+                    qDebug()  << "\n______________________________________________________\n";
 
                     delete H_r;
                     delete H_g;
@@ -115,6 +136,11 @@ void CTschumperle::appliquer(CImage *init, CImage *masque, CImage *out, float _i
         }
 
     }
+
+    out->Copy(Out_tmp->getQimage());
+
+    delete I_tmp;
+    delete Out_tmp;
 }
 
 /**

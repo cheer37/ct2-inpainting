@@ -10,7 +10,7 @@
 #ifndef CDIFFTENSOR_H
 #define CDIFFTENSOR_H
 
-#include "cimage.h"
+#include "cimagedouble.h"
 #include <QDebug>
 
 /** @class CDiffTensor
@@ -21,14 +21,14 @@
 class CDiffTensor
 {
 public:
-    CDiffTensor(CImage * _img, int _x, int _y);
+    CDiffTensor(CImageDouble * _img, int _x, int _y);
     ~CDiffTensor();
 
     double * GetDiffTensor_r();
     double * GetDiffTensor_g();
     double * GetDiffTensor_b();
 private:
-    void GetStrucTensor(CImage * _img, int _x, int _y, int _canal, double * mat_res);
+    void GetStrucTensor(CImageDouble * _img, int _x, int _y, int _canal, double * mat_res);
     void CalcDiffTensMat(double * teta_m, double tmp_mult, double *mat_res);
 
     double * DTMat_r;

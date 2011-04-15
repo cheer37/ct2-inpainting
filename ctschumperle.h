@@ -13,6 +13,7 @@
 #include "cimage.h"
 #include "chessian.h"
 #include "cdifftensor.h"
+#include "cimagedouble.h"
 #include <QProgressBar>
 #include <QDebug>
 
