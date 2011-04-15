@@ -242,23 +242,23 @@ void CDiffTensor::CalcDiffTensMat(double * teta_m, double tmp_mult, double *mat_
 */
 void CDiffTensor::GetStrucTensor(CImageDouble * _img, int _x, int _y, int _canal, double * mat_res)
 {
-    /*float  SobelX [] = {-1.0, 0.0, 1.0,
+    float  SobelX [] = {-1.0, 0.0, 1.0,
                         -2.0, 0.0, 2.0,
                         -1.0, 0.0, 1.0};
 
     float  SobelY [] = {-1.0, -2.0, -1.0,
                         0.0, 0.0, 0.0,
-                        1.0, 2.0, 1.0};*/
+                        1.0, 2.0, 1.0};
     double ValX = 0.0, ValY = 0.0;
 
-    /*int cpt = 0;*/
+    int cpt = 0;
     mat_res[0] = 0.0;
     mat_res[1] = 0.0;
     mat_res[2] = 0.0;
     mat_res[3] = 0.0;
     if (_canal == 0)
     {
-        /*for (int y = _y-1; y <= _y+1; ++y)
+        for (int y = _y-1; y <= _y+1; ++y)
         {
             for (int x = _x-1; x <= _x+1; ++x)
             {
@@ -279,8 +279,8 @@ void CDiffTensor::GetStrucTensor(CImageDouble * _img, int _x, int _y, int _canal
                 ValX = 0;
                 ValY = 0;
             }
-        }*/
-        for (int y = _y-1; y <= _y+1; ++y)
+        }
+        /*for (int y = _y-1; y <= _y+1; ++y)
         {
              for (int x = _x-1; x <= _x+1; ++x)
              {
@@ -291,11 +291,11 @@ void CDiffTensor::GetStrucTensor(CImageDouble * _img, int _x, int _y, int _canal
                  mat_res[2] += ValY*ValX;
                  mat_res[3] += ValY*ValY;
              }
-        }
+        }*/
     }
     else if (_canal == 1)
     {
-        /*for (int y = _y-1; y <= _y+1; ++y)
+        for (int y = _y-1; y <= _y+1; ++y)
         {
             for (int x = _x-1; x <= _x+1; ++x)
             {
@@ -316,8 +316,8 @@ void CDiffTensor::GetStrucTensor(CImageDouble * _img, int _x, int _y, int _canal
                 ValX = 0;
                 ValY = 0;
             }
-        }*/
-        for (int y = _y-1; y <= _y+1; ++y)
+        }
+        /*for (int y = _y-1; y <= _y+1; ++y)
         {
              for (int x = _x-1; x <= _x+1; ++x)
              {
@@ -328,11 +328,11 @@ void CDiffTensor::GetStrucTensor(CImageDouble * _img, int _x, int _y, int _canal
                  mat_res[2] += ValY*ValX;
                  mat_res[3] += ValY*ValY;
              }
-        }
+        }*/
     }
     else if (_canal == 2)
     {
-        /*for (int y = _y-1; y <= _y+1; ++y)
+        for (int y = _y-1; y <= _y+1; ++y)
         {
             for (int x = _x-1; x <= _x+1; ++x)
             {
@@ -353,8 +353,8 @@ void CDiffTensor::GetStrucTensor(CImageDouble * _img, int _x, int _y, int _canal
                 ValX = 0;
                 ValY = 0;
             }
-        }*/
-        for (int y = _y-1; y <= _y+1; ++y)
+        }
+        /*for (int y = _y-1; y <= _y+1; ++y)
         {
              for (int x = _x-1; x <= _x+1; ++x)
              {
@@ -365,7 +365,7 @@ void CDiffTensor::GetStrucTensor(CImageDouble * _img, int _x, int _y, int _canal
                  mat_res[2] += ValY*ValX;
                  mat_res[3] += ValY*ValY;
              }
-        }
+        }*/
     }
 }
 
