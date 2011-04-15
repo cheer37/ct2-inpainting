@@ -22,13 +22,14 @@ class CDiffTensor
 {
 public:
     CDiffTensor(CImage * _img, int _x, int _y);
+    ~CDiffTensor();
 
     double * GetDiffTensor_r();
     double * GetDiffTensor_g();
     double * GetDiffTensor_b();
 private:
-    double * GetStrucTensor(CImage * _img, int _x, int _y, int _canal);
-    double * CalcDiffTensMat(double * teta_m, double tmp_mult);
+    void GetStrucTensor(CImage * _img, int _x, int _y, int _canal, double * mat_res);
+    void CalcDiffTensMat(double * teta_m, double tmp_mult, double *mat_res);
 
     double * DTMat_r;
     double * DTMat_g;
