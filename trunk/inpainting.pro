@@ -12,7 +12,8 @@ SOURCES += main.cpp \
     cvector2f.cpp \
     cmatrimage.cpp \
     chessian.cpp \
-    cdifftensor.cpp
+    cdifftensor.cpp \
+    cimagedouble.cpp
 HEADERS += mainwindow.h \
     cimage.h \
     dialog_util.h \
@@ -21,7 +22,8 @@ HEADERS += mainwindow.h \
     cvector2f.h \
     cmatrimage.h \
     chessian.h \
-    cdifftensor.h
+    cdifftensor.h \
+    cimagedouble.h
 FORMS += mainwindow.ui \
     dialog_util.ui
 CONFIG += console

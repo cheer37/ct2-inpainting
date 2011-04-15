@@ -10,7 +10,7 @@
 #ifndef CHESSIAN_H
 #define CHESSIAN_H
 
-#include "cimage.h"
+#include "cimagedouble.h"
 
 /** @class CHessian
  * @brief calcul de la hessienne
@@ -21,7 +21,7 @@ class CHessian
 {
 public:
     CHessian();
-    static double * GetHessian(CImage * _img, int _x, int _y, int _canal);
+    static double * GetHessian(CImageDouble * _img, int _x, int _y, int _canal);
 
 };
 

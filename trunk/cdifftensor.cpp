@@ -14,7 +14,7 @@
 *                  pour un pixel et pour chaque canal
 * @param _img image a traiter, _x coord x du pixel, _y coord y du pixel
 */
-CDiffTensor::CDiffTensor(CImage * _img, int _x, int _y)
+CDiffTensor::CDiffTensor(CImageDouble * _img, int _x, int _y)
 {
     /*Initialisation des matrices resultat*/
     this->DTMat_r = new double [4];
@@ -38,17 +38,17 @@ CDiffTensor::CDiffTensor(CImage * _img, int _x, int _y)
     double teta_m[2];
 
     /*****************Pour le canal R*********************/
-   /* qDebug() << "TENSEUR DE STRUCTURE RED: " <<StrucTensor_g[0] << " " <<StrucTensor_g[1] << " " <<StrucTensor_g[2] << " " <<StrucTensor_g[3] << "\n";*/
+   qDebug() << "TENSEUR DE STRUCTURE RED: " <<StrucTensor_g[0] << " " <<StrucTensor_g[1] << " " <<StrucTensor_g[2] << " " <<StrucTensor_g[3] << "\n";
 
     /*Calcul des valeurs propres lambda+- */
-    a = 1;
+    a = 1.0;
     b = -StrucTensor_r[0] - StrucTensor_r[3];
     c = (StrucTensor_r[0]*StrucTensor_r[3]) - (StrucTensor_r[1]*StrucTensor_r[2]);
-    det = pow(b, 2)-4*(a*c);
+    det = pow(b, 2.0)-4.0*(a*c);
 
-    Lambda_p = (-b+sqrt(det))/(2*a);
-    Lambda_m = (-b-sqrt(det))/(2*a);
-    /*qDebug() << "a: " << a << " b: " << b << " c: " << c << " det: " << det << " lambda p: " << Lambda_p << " lambda m: " << Lambda_m << '\n';*/
+    Lambda_p = (-b+sqrt(det))/(2.0*a);
+    Lambda_m = (-b-sqrt(det))/(2.0*a);
+    qDebug() << "a: " << a << " b: " << b << " c: " << c << " det: " << det << " lambda p: " << Lambda_p << " lambda m: " << Lambda_m << '\n';
         /*Si lambda+ < lambda- on echange */
     if (Lambda_m > Lambda_p)
     {
@@ -76,15 +76,15 @@ CDiffTensor::CDiffTensor(CImage * _img, int _x, int _y)
          teta_p[1] = teta_tmp;
     }
         /*On norme les vecteurs propres teta+- */
-    double norme = sqrt(pow(teta_p[0], 2)+pow(teta_p[1], 2));
+    double norme = sqrt(pow(teta_p[0], 2.0)+pow(teta_p[1], 2.0));
     teta_p[0] /= norme;
     teta_p[1] /= norme;
-    norme = sqrt(pow(teta_m[0], 2)+pow(teta_m[1], 2));
+    norme = sqrt(pow(teta_m[0], 2.0)+pow(teta_m[1], 2.0));
     teta_m[0] /= norme;
     teta_m[1] /= norme;
 
     /*Calcul du coefficient tmp_mult*/
-    tmp_mult = 1/(sqrt(1+Lambda_m+Lambda_p));
+    tmp_mult = 1.0/(sqrt(1.0+Lambda_m+Lambda_p));
 
     //qDebug() << " a: " << a << " b: " << b << " c: " << c <<" lambda-p :" << Lambda_p << " lambda-m :" << Lambda_m << " tmp_multp r: " << tmp_mult << '\n';
 
@@ -96,13 +96,13 @@ CDiffTensor::CDiffTensor(CImage * _img, int _x, int _y)
     /*****************Pour le canal G*********************/
 
     /*Calcul des valeurs propres lambda+- */
-    a = 1;
+    a = 1.0;
     b = -StrucTensor_g[0] - StrucTensor_g[3];
     c = (StrucTensor_g[0]*StrucTensor_g[3]) - (StrucTensor_g[1]*StrucTensor_g[2]);
-    det = pow(b, 2)-4*(a*c);
+    det = pow(b, 2.0)-4.0*(a*c);
 
-    Lambda_p = (-b+sqrt(det))/(2*a);
-    Lambda_m = (-b-sqrt(det))/(2*a);
+    Lambda_p = (-b+sqrt(det))/(2.0*a);
+    Lambda_m = (-b-sqrt(det))/(2.0*a);
 
         /*Si lambda+ < lambda- on echange */
     if (Lambda_m > Lambda_p)
@@ -131,15 +131,15 @@ CDiffTensor::CDiffTensor(CImage * _img, int _x, int _y)
          teta_p[1] = teta_tmp;
     }
         /*On norme les vecteurs propres teta+- */
-    norme = sqrt(pow(teta_p[0], 2)+pow(teta_p[1], 2));
+    norme = sqrt(pow(teta_p[0], 2.0)+pow(teta_p[1], 2.0));
     teta_p[0] /= norme;
     teta_p[1] /= norme;
-    norme = sqrt(pow(teta_m[0], 2)+pow(teta_m[1], 2));
+    norme = sqrt(pow(teta_m[0], 2.0)+pow(teta_m[1], 2.0));
     teta_m[0] /= norme;
     teta_m[1] /= norme;
 
     /*Calcul du coefficient tmp_mult*/
-    tmp_mult = 1/(sqrt(1+Lambda_m+Lambda_p));
+    tmp_mult = 1.0/(sqrt(1.0+Lambda_m+Lambda_p));
     //qDebug() << " a: " << a << " b: " << b << " c: " << c <<" lambda-p :" << Lambda_p << " lambda-m :" << Lambda_m << " tmp_multp r: " << tmp_mult << '\n';
 
     /*Calcul du tenseur de diffusion final*/
@@ -150,13 +150,13 @@ CDiffTensor::CDiffTensor(CImage * _img, int _x, int _y)
     /*****************Pour le canal B*********************/
 
     /*Calcul des valeurs propres lambda+- */
-    a = 1;
+    a = 1.0;
     b = -StrucTensor_b[0] - StrucTensor_b[3];
     c = (StrucTensor_b[0]*StrucTensor_b[3]) - (StrucTensor_b[1]*StrucTensor_b[2]);
-    det = pow(b, 2)-4*(a*c);
+    det = pow(b, 2.0)-4.0*(a*c);
 
-    Lambda_p = (-b+sqrt(det))/(2*a);
-    Lambda_m = (-b-sqrt(det))/(2*a);
+    Lambda_p = (-b+sqrt(det))/(2.0*a);
+    Lambda_m = (-b-sqrt(det))/(2.0*a);
 
         /*Si lambda+ < lambda- on echange */
     if (Lambda_m > Lambda_p)
@@ -185,15 +185,15 @@ CDiffTensor::CDiffTensor(CImage * _img, int _x, int _y)
          teta_p[1] = teta_tmp;
     }
         /*On norme les vecteurs propres teta+- */
-    norme = sqrt(pow(teta_p[0], 2)+pow(teta_p[1], 2));
+    norme = sqrt(pow(teta_p[0], 2.0)+pow(teta_p[1], 2.0));
     teta_p[0] /= norme;
     teta_p[1] /= norme;
-    norme = sqrt(pow(teta_m[0], 2)+pow(teta_m[1], 2));
+    norme = sqrt(pow(teta_m[0], 2.0)+pow(teta_m[1], 2.0));
     teta_m[0] /= norme;
     teta_m[1] /= norme;
 
     /*Calcul du coefficient tmp_mult*/
-    tmp_mult = 1/(sqrt(1+Lambda_m+Lambda_p));
+    tmp_mult = 1.0/(sqrt(1.0+Lambda_m+Lambda_p));
 
     //qDebug() << " a: " << a << " b: " << b << " c: " << c <<" lambda-p :" << Lambda_p << " lambda-m :" << Lambda_m << " tmp_multp r: " << tmp_mult << '\n';
 
@@ -236,7 +236,7 @@ void CDiffTensor::CalcDiffTensMat(double * teta_m, double tmp_mult, double *mat_
 * @param _img image a traiter, _x coord x du pixel, _y coord y du pixel, _canal canal a traiter
 * @return double * matrice 2x2
 */
-void CDiffTensor::GetStrucTensor(CImage * _img, int _x, int _y, int _canal, double * mat_res)
+void CDiffTensor::GetStrucTensor(CImageDouble * _img, int _x, int _y, int _canal, double * mat_res)
 {
     /*float  SobelX [] = {-1.0, 0.0, 1.0,
                         -2.0, 0.0, 2.0,
