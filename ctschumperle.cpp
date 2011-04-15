@@ -26,13 +26,12 @@ void CTschumperle::appliquer(CImage *init, CImage *masque, CImage *out, float _i
 {
     this->progressbar->setMaximum(_iteration);//initialise la progressbar
 
-    qDebug() << "Debut tschump\n";
 
     CImageDouble *I_tmp = new CImageDouble(init);
     CImageDouble *Out_tmp = new CImageDouble(init);
 
     /*Out_tmp->Copy(init);*/
-    qDebug() << "1\n";
+
     for (int y = 0; y < init->height(); ++y)
     {
         for (int x = 0; x < init->width(); ++x)
@@ -46,7 +45,6 @@ void CTschumperle::appliquer(CImage *init, CImage *masque, CImage *out, float _i
         }
     }
 
-    qDebug() << "2\n";
     for (int it = 0; it < _iteration; ++it)
     {
         this->progressbar->setValue(this->progressbar->value()+1);//incremente la progressbar
@@ -89,7 +87,7 @@ void CTschumperle::appliquer(CImage *init, CImage *masque, CImage *out, float _i
                     Mat_res_b[2] = D_b[2]*H_b[0]+D_b[3]*H_b[2];
                     Mat_res_b[3] = D_b[2]*H_b[1]+D_b[3]*H_b[3];
 
-                    qDebug() << " DiffTensor R: [" << D_r[0] << "," <<  D_r[1] << "," <<  D_r[2] << "," <<  D_r[3] << "]\n"
+                    /*qDebug() << "DiffTensor R: [" << D_r[0] << "," <<  D_r[1] << "," <<  D_r[2] << "," <<  D_r[3] << "]\n"
                              << "Hessian    R: [" << H_r[0] << "," <<  H_r[1] << "," <<  H_r[2] << "," <<  H_r[3] << "]\n"
                              << "MatRes     R: [" << Mat_res_r[0] << "," <<  Mat_res_r[1] << "," <<  Mat_res_r[2] << "," <<  Mat_res_r[3] << "]\n"
                              << "DiffTensor G: [" << D_g[0] << "," <<  D_g[1] << "," <<  D_g[2] << "," <<  D_g[3] << "]\n"
@@ -105,24 +103,23 @@ void CTschumperle::appliquer(CImage *init, CImage *masque, CImage *out, float _i
                              << " = " << (I_tmp->getRedPixel(i, j)+(dt*(Mat_res_r[0]+Mat_res_r[3])))
 
                              << "\nVal px G: I_tmp->getGreenPixel(i, j) : " << I_tmp->getGreenPixel(i, j)
-                             << " + dt*(D.H) : " << dt*(Mat_res_r[0]+Mat_res_r[3])
-                             << " = " << (I_tmp->getGreenPixel(i, j)+(dt*(Mat_res_r[0]+Mat_res_r[3])))
+                             << " + dt*(D.H) : " << dt*(Mat_res_g[0]+Mat_res_g[3])
+                             << " = " << (I_tmp->getGreenPixel(i, j)+(dt*(Mat_res_g[0]+Mat_res_g[3])))
 
                              << "\nVal px B: I_tmp->getBluePixel(i, j) : " << I_tmp->getBluePixel(i, j)
-                             << " + dt*(D.H) : " << dt*(Mat_res_r[0]+Mat_res_r[3])
-                             << " = " << (I_tmp->getBluePixel(i, j)+(dt*(Mat_res_r[0]+Mat_res_r[3])));
+                             << " + dt*(D.H) : " << dt*(Mat_res_b[0]+Mat_res_b[3])
+                             << " = " << (I_tmp->getBluePixel(i, j)+(dt*(Mat_res_b[0]+Mat_res_b[3])));*/
 
                     /*Calcul de la valeur a ajouter au pixel avec dt*trace(DH)*/
                     //out->setPixel(i, j, qRgb(I_tmp->getRedPixel(i, j)+(dt*(Mat_res_r[0]+Mat_res_r[3])), I_tmp->getGreenPixel(i, j)+(dt*(Mat_res_g[0]+Mat_res_g[3])), I_tmp->getBluePixel(i, j)+(dt*(Mat_res_b[0]+Mat_res_b[3]))));
                     if ((dt*(Mat_res_r[0]+Mat_res_r[3])) == (dt*(Mat_res_r[0]+Mat_res_r[3])))
-                    {
-                        qDebug() << "\nOn ecrit";
                         Out_tmp->setRedPixel(i, j, I_tmp->getRedPixel(i, j)+(dt*(Mat_res_r[0]+Mat_res_r[3])));
-                        Out_tmp->setGreenPixel(i, j, I_tmp->getGreenPixel(i, j)+(dt*(Mat_res_r[0]+Mat_res_r[3])));
-                        Out_tmp->setBluePixel(i, j, I_tmp->getBluePixel(i, j)+(dt*(Mat_res_r[0]+Mat_res_r[3])));
-                    }
+                    if ((dt*(Mat_res_g[0]+Mat_res_g[3])) == (dt*(Mat_res_g[0]+Mat_res_g[3])))
+                        Out_tmp->setGreenPixel(i, j, I_tmp->getGreenPixel(i, j)+(dt*(Mat_res_g[0]+Mat_res_g[3])));
+                    if ((dt*(Mat_res_b[0]+Mat_res_b[3])) == (dt*(Mat_res_b[0]+Mat_res_b[3])))
+                        Out_tmp->setBluePixel(i, j, I_tmp->getBluePixel(i, j)+(dt*(Mat_res_b[0]+Mat_res_b[3])));
 
-                    qDebug()  << "\n______________________________________________________\n";
+                    //qDebug()  << "\n______________________________________________________\n";
 
                     delete H_r;
                     delete H_g;

@@ -21,6 +21,8 @@ class CImageDouble
         void Copy(CImageDouble * _in);
         QImage * getQimage();
 
+        void afficher_valeurs();
+
         int width, height;
     private:
 

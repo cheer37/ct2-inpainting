@@ -124,7 +124,19 @@ QImage * CImageDouble::getQimage()
     for (int y = 0; y < this->height; ++y)
     {
         for(int x = 0; x < this->width; ++x)
-            res->setPixel(x, y, qRgb((int)this->getRedPixel(x, y),(int)this->getGreenPixel(x, y), (int)this->getBluePixel(x, y)));
+            res->setPixel(x, y, qRgb(this->getRedPixel(x, y),this->getGreenPixel(x, y), this->getBluePixel(x, y)));
     }
     return res;
+}
+
+void CImageDouble::afficher_valeurs()
+{
+    for(int j = 0; j < 1; ++j)
+    {
+        for(int i = 0; i < this->width; ++i)
+        {
+            qDebug() << "[" << i << "," << j << "]: RGB[" << this->getRedPixel(i, j) << "," <<  this->getGreenPixel(i, j) << "," <<  this->getBluePixel(i, j)
+                     << "]\n";
+        }
+    }
 }
