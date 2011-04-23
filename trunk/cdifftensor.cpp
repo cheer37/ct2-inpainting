@@ -249,9 +249,14 @@ void CDiffTensor::GetStrucTensor(CImageDouble * _img, int _x, int _y, int _canal
     float  SobelY [] = {-1.0, -2.0, -1.0,
                         0.0, 0.0, 0.0,
                         1.0, 2.0, 1.0};
+
+    float  Gauss [] = {1.0, 2.0, 1.0,
+                        2.0, 4.0, 2.0,
+                        1.0, 2.0, 1.0};
+
     double ValX = 0.0, ValY = 0.0;
 
-    int cpt = 0;
+    int cpt = 0, cpt2 = 0;
     mat_res[0] = 0.0;
     mat_res[1] = 0.0;
     mat_res[2] = 0.0;
@@ -272,6 +277,8 @@ void CDiffTensor::GetStrucTensor(CImageDouble * _img, int _x, int _y, int _canal
                         ++cpt;
                     }
                 }
+                ValX = ValX*Gauss[cpt2];
+                ValY = ValY*Gauss[cpt2++];
                 mat_res[0] += ValX*ValX;
                 mat_res[1] += ValX*ValY;
                 mat_res[2] += ValX*ValY;
@@ -280,6 +287,10 @@ void CDiffTensor::GetStrucTensor(CImageDouble * _img, int _x, int _y, int _canal
                 ValY = 0;
             }
         }
+        mat_res[0] /= 16.0;
+        mat_res[1] /= 16.0;
+        mat_res[2] /= 16.0;
+        mat_res[3] /= 16.0;
         /*for (int y = _y-1; y <= _y+1; ++y)
         {
              for (int x = _x-1; x <= _x+1; ++x)
@@ -309,6 +320,8 @@ void CDiffTensor::GetStrucTensor(CImageDouble * _img, int _x, int _y, int _canal
                         ++cpt;
                     }
                 }
+                ValX = ValX*Gauss[cpt2];
+                ValY = ValY*Gauss[cpt2++];
                 mat_res[0] += ValX*ValX;
                 mat_res[1] += ValX*ValY;
                 mat_res[2] += ValX*ValY;
@@ -317,6 +330,10 @@ void CDiffTensor::GetStrucTensor(CImageDouble * _img, int _x, int _y, int _canal
                 ValY = 0;
             }
         }
+        mat_res[0] /= 16.0;
+        mat_res[1] /= 16.0;
+        mat_res[2] /= 16.0;
+        mat_res[3] /= 16.0;
         /*for (int y = _y-1; y <= _y+1; ++y)
         {
              for (int x = _x-1; x <= _x+1; ++x)
@@ -346,6 +363,8 @@ void CDiffTensor::GetStrucTensor(CImageDouble * _img, int _x, int _y, int _canal
                         ++cpt;
                     }
                 }
+                ValX = ValX*Gauss[cpt2];
+                ValY = ValY*Gauss[cpt2++];
                 mat_res[0] += ValX*ValX;
                 mat_res[1] += ValX*ValY;
                 mat_res[2] += ValX*ValY;
@@ -354,6 +373,10 @@ void CDiffTensor::GetStrucTensor(CImageDouble * _img, int _x, int _y, int _canal
                 ValY = 0;
             }
         }
+        mat_res[0] /= 16.0;
+        mat_res[1] /= 16.0;
+        mat_res[2] /= 16.0;
+        mat_res[3] /= 16.0;
         /*for (int y = _y-1; y <= _y+1; ++y)
         {
              for (int x = _x-1; x <= _x+1; ++x)

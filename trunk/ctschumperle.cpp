@@ -129,6 +129,7 @@ void CTschumperle::appliquer(CImage *init, CImage *masque, CImage *out, float _i
                     delete D_g;
                     delete D_b;
                 }
+
             }
         }
 
