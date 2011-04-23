@@ -12,6 +12,7 @@
 #include "dialog_util.h"
 #include "ctschumperle.h"
 #include "cmgvc.h"
+#include "cinpbase.h"
 
 namespace Ui {
     class MainWindow;
@@ -37,6 +38,7 @@ private:
     void setupMatrix(int i);
 
 private slots:
+    void on_radioButton_9_clicked();
     void on_actionUtilisation_triggered();
     void on_radioButton_2_clicked();
     void on_radioButton_1_clicked();
