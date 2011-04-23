@@ -186,6 +186,12 @@ void MainWindow::on_pushButton_go_clicked()
             algo->set_progressbar(this->ui->progressBar);
             algo->appliquer(this->image, this->masque, this->resultat, this->ui->doubleSpinBox_3->value(), this->ui->doubleSpinBox_4->value());
         }
+        else if (this->ui->radioButton_9->isChecked())
+        {
+            CInpBase * algo = new CInpBase();
+            algo->set_progressbar(this->ui->progressBar);
+            algo->appliquer(this->image, this->masque, this->resultat, this->ui->doubleSpinBox_19->value(), this->ui->doubleSpinBox_20->value());
+        }
 
         //Affiche le resultat et coche la case (declenche l'event cliked sur checbox_res
         if (this->resultat != 0)
@@ -209,15 +215,23 @@ void MainWindow::on_actionAbout_triggered()
 void MainWindow::on_radioButton_1_clicked()
 {
     this->ui->radioButton_2->setChecked(false);
+    this->ui->radioButton_9->setChecked(false);
 }
 
 void MainWindow::on_radioButton_2_clicked()
 {
     this->ui->radioButton_1->setChecked(false);
+    this->ui->radioButton_9->setChecked(false);
 }
 
 void MainWindow::on_actionUtilisation_triggered()
 {
     Dialog_util *fenetre = new Dialog_util();
     fenetre->showNormal();
+}
+
+void MainWindow::on_radioButton_9_clicked()
+{
+    this->ui->radioButton_1->setChecked(false);
+    this->ui->radioButton_2->setChecked(false);
 }

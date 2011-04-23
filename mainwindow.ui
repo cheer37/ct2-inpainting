@@ -22,9 +22,12 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="3,14">
+     <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="1,4">
       <property name="spacing">
        <number>0</number>
+      </property>
+      <property name="sizeConstraint">
+       <enum>QLayout::SetNoConstraint</enum>
       </property>
       <property name="rightMargin">
        <number>0</number>
@@ -223,7 +226,7 @@
                 <double>0.100000000000000</double>
                </property>
                <property name="value">
-                <double>0.333330000000000</double>
+                <double>5.000000000000000</double>
                </property>
               </widget>
              </item>
@@ -261,18 +264,22 @@
                 <double>50000.000000000000000</double>
                </property>
                <property name="value">
-                <double>500.000000000000000</double>
+                <double>2000.000000000000000</double>
                </property>
               </widget>
              </item>
             </layout>
            </widget>
+           <zorder>radioButton_1</zorder>
+           <zorder>layoutWidget_2</zorder>
+           <zorder>layoutWidget</zorder>
+           <zorder>groupBoxmeth1_2</zorder>
           </widget>
          </item>
          <item>
           <widget class="QGroupBox" name="groupBoxmeth2">
            <property name="title">
-            <string>Methode 2</string>
+            <string>Mgvc</string>
            </property>
            <widget class="QRadioButton" name="radioButton_2">
             <property name="geometry">
@@ -366,6 +373,116 @@
              </item>
             </layout>
            </widget>
+           <zorder>radioButton_2</zorder>
+           <zorder>layoutWidget_4</zorder>
+           <zorder>layoutWidget_3</zorder>
+           <zorder>graphicsView_img</zorder>
+           <zorder>groupBox_masque_2</zorder>
+           <zorder>methodebase</zorder>
+           <zorder>methodebase</zorder>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="methodebase">
+           <property name="title">
+            <string>Methode base</string>
+           </property>
+           <widget class="QWidget" name="layoutWidget_18">
+            <property name="geometry">
+             <rect>
+              <x>20</x>
+              <y>40</y>
+              <width>118</width>
+              <height>22</height>
+             </rect>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_20">
+             <item>
+              <widget class="QLabel" name="label_19">
+               <property name="text">
+                <string>Lambda</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QDoubleSpinBox" name="doubleSpinBox_19">
+               <property name="prefix">
+                <string/>
+               </property>
+               <property name="suffix">
+                <string/>
+               </property>
+               <property name="decimals">
+                <number>5</number>
+               </property>
+               <property name="maximum">
+                <double>200.000000000000000</double>
+               </property>
+               <property name="value">
+                <double>0.005000000000000</double>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QRadioButton" name="radioButton_9">
+            <property name="geometry">
+             <rect>
+              <x>10</x>
+              <y>20</y>
+              <width>133</width>
+              <height>22</height>
+             </rect>
+            </property>
+            <property name="text">
+             <string>Activée</string>
+            </property>
+           </widget>
+           <widget class="QWidget" name="layoutWidget_19">
+            <property name="geometry">
+             <rect>
+              <x>20</x>
+              <y>70</y>
+              <width>120</width>
+              <height>22</height>
+             </rect>
+            </property>
+            <layout class="QHBoxLayout" name="horizontalLayout_21">
+             <item>
+              <widget class="QLabel" name="label_20">
+               <property name="text">
+                <string>δt</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QDoubleSpinBox" name="doubleSpinBox_20">
+               <property name="prefix">
+                <string/>
+               </property>
+               <property name="suffix">
+                <string/>
+               </property>
+               <property name="decimals">
+                <number>5</number>
+               </property>
+               <property name="maximum">
+                <double>200.000000000000000</double>
+               </property>
+               <property name="singleStep">
+                <double>0.100000000000000</double>
+               </property>
+               <property name="value">
+                <double>2.500000000000000</double>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+           <zorder>layoutWidget_18</zorder>
+           <zorder>radioButton_9</zorder>
+           <zorder>layoutWidget_19</zorder>
+           <zorder>label_20</zorder>
           </widget>
          </item>
          <item>

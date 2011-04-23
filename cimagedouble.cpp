@@ -28,12 +28,12 @@ CImageDouble::~CImageDouble()
 
 double CImageDouble::getRedPixel(int _x, int _y)
 {
-    if ( _x > this->width )
+    if ( _x >= this->width )
         _x = this->width - (_x-this->width) - 1;
     else if ( _x < 0)
         _x = abs(_x)-1;
 
-    if ( _y > this->height )
+    if ( _y >= this->height )
         _y = this->height - (_y-this->height) - 1;
     else if (_y < 0)
         _y = abs(_y)-1;
@@ -42,12 +42,12 @@ double CImageDouble::getRedPixel(int _x, int _y)
 }
 double CImageDouble::getGreenPixel(int _x, int _y)
 {
-    if ( _x > this->width )
+    if ( _x >= this->width )
         _x = this->width - (_x-this->width) - 1;
     else if ( _x < 0)
         _x = abs(_x)-1;
 
-    if ( _y > this->height )
+    if ( _y >= this->height )
         _y = this->height - (_y-this->height) - 1;
     else if (_y < 0)
         _y = abs(_y)-1;
@@ -55,12 +55,12 @@ double CImageDouble::getGreenPixel(int _x, int _y)
 }
 double CImageDouble::getBluePixel(int _x, int _y)
 {
-    if ( _x > this->width )
+    if ( _x >= this->width )
         _x = this->width - (_x-this->width) - 1;
     else if ( _x < 0)
         _x = abs(_x)-1;
 
-    if ( _y > this->height )
+    if ( _y >= this->height )
         _y = this->height - (_y-this->height) - 1;
     else if (_y < 0)
         _y = abs(_y)-1;
