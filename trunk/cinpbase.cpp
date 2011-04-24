@@ -156,12 +156,15 @@ void CInpBase::appliquer(CImage *init, CImage *masque, CImage *out, float _lambd
         {
             for(int j = 0; j < H; ++j)
             {
-                temp = U1->getRedPixel(i, j)+_dt*(2.0*((masque_tmp->getRedPixel(i, j))/255.0)*((init_tmp->getRedPixel(i, j))- (U1->getRedPixel(i, j)))+_lambda*Lap->getRedPixel(i, j));
-                U2->setRedPixel(i, j, temp);
-                temp = U1->getGreenPixel(i, j)+_dt*(2.0*((masque_tmp->getGreenPixel(i, j))/255.0)*((init_tmp->getGreenPixel(i, j))- (U1->getGreenPixel(i, j)))+_lambda*Lap->getGreenPixel(i, j));
-                U2->setGreenPixel(i, j, temp);
-                temp = U1->getBluePixel(i, j)+_dt*(2.0*((masque_tmp->getBluePixel(i, j))/255.0)*((init_tmp->getBluePixel(i, j))- (U1->getBluePixel(i, j)))+_lambda*Lap->getBluePixel(i, j));
-                U2->setBluePixel(i, j, temp);
+                if(masque_tmp->getRedPixel(i, j) == 0.0)
+                {
+                    temp = U1->getRedPixel(i, j)+_dt*(2.0*((masque_tmp->getRedPixel(i, j))/255.0)*((init_tmp->getRedPixel(i, j))- (U1->getRedPixel(i, j)))+_lambda*Lap->getRedPixel(i, j));
+                    U2->setRedPixel(i, j, temp);
+                    temp = U1->getGreenPixel(i, j)+_dt*(2.0*((masque_tmp->getGreenPixel(i, j))/255.0)*((init_tmp->getGreenPixel(i, j))- (U1->getGreenPixel(i, j)))+_lambda*Lap->getGreenPixel(i, j));
+                    U2->setGreenPixel(i, j, temp);
+                    temp = U1->getBluePixel(i, j)+_dt*(2.0*((masque_tmp->getBluePixel(i, j))/255.0)*((init_tmp->getBluePixel(i, j))- (U1->getBluePixel(i, j)))+_lambda*Lap->getBluePixel(i, j));
+                    U2->setBluePixel(i, j, temp);
+                }
             }
         }
         dist = Distance(U1, U2);
