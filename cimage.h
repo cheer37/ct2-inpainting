@@ -16,7 +16,7 @@ class CImage : public QGraphicsItem
         QImage * image;
 
         CImage(QString);
-        CImage(int, int, int);
+        CImage(int width, int height, int type);
 
         QRectF boundingRect() const;
         void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
