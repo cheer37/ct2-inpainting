@@ -190,7 +190,7 @@ void MainWindow::on_pushButton_go_clicked()
         {
             CInpBase * algo = new CInpBase();
             algo->set_progressbar(this->ui->progressBar);
-            algo->appliquer(this->image, this->masque, this->resultat, this->ui->doubleSpinBox_19->value(), this->ui->doubleSpinBox_20->value());
+            algo->appliquer(this->image, this->masque, this->resultat, this->ui->doubleSpinBox_19->value(), this->ui->doubleSpinBox_20->value(), this->ui->doubleSpinBox_21->value());
         }
 
         //Affiche le resultat et coche la case (declenche l'event cliked sur checbox_res
