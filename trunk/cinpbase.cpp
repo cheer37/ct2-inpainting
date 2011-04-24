@@ -116,10 +116,11 @@ double CInpBase::Distance(CImageDouble *im1, CImageDouble *im2)
 */
 void CInpBase::appliquer(CImage *init, CImage *masque, CImage *out, float _lambda, float _dt, float _distance)
 {
-    int i, j;
     int W = init->width();
     int H = init->height();
-    double dist = _distance, temp;
+    double dist = 200.0, temp;
+
+    this->progressbar->setMaximum(1000);//initialise la progressbar
 
     CImageDouble * masque_tmp = new CImageDouble(masque);
     CImageDouble * init_tmp = new CImageDouble(init);
@@ -147,18 +148,15 @@ void CInpBase::appliquer(CImage *init, CImage *masque, CImage *out, float _lambd
     CImageDouble *U2 = new CImageDouble(init);
     CImageDouble *Lap = new CImageDouble(init);
 
-    while(dist > 0.05)
+    while(dist > _distance)
     {
-        /*qDebug() << "1\n";*/
+        this->progressbar->setValue(this->progressbar->value()+1);//incremente la progressbar
         Laplacien(U1, Lap);
-        /*qDebug() << "2\n";*/
-        for(i = 0; i < W; ++i)
+        for(int i = 0; i < W; ++i)
         {
-            for(j = 0; j < H; ++j)
+            for(int j = 0; j < H; ++j)
             {
                 temp = U1->getRedPixel(i, j)+_dt*(2.0*((masque_tmp->getRedPixel(i, j))/255.0)*((init_tmp->getRedPixel(i, j))- (U1->getRedPixel(i, j)))+_lambda*Lap->getRedPixel(i, j));
-                /*if (masque->getRedPixel(i, j) == 0.0)
-                    qDebug() << "iter: " <<k<< " |Ancienne valeur ["<<i<<','<<j<<"]: "<< U1->getRedPixel(i, j) << " Nouvelle valeur: " << temp << "\n";*/
                 U2->setRedPixel(i, j, temp);
                 temp = U1->getGreenPixel(i, j)+_dt*(2.0*((masque_tmp->getGreenPixel(i, j))/255.0)*((init_tmp->getGreenPixel(i, j))- (U1->getGreenPixel(i, j)))+_lambda*Lap->getGreenPixel(i, j));
                 U2->setGreenPixel(i, j, temp);
@@ -166,10 +164,8 @@ void CInpBase::appliquer(CImage *init, CImage *masque, CImage *out, float _lambd
                 U2->setBluePixel(i, j, temp);
             }
         }
-        /*qDebug() << "3\n";*/
         dist = Distance(U1, U2);
         U1->Copy(U2);
-        /*qDebug() << "\t dist : " << dist << "\n";*/
     }
     ExpansionDynamique(U2, masque);
     out->Copy(U2->getQimage());
