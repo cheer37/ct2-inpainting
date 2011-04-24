@@ -82,9 +82,10 @@ void CInpBase::Laplacien(CImageDouble *in, CImageDouble *out)
             /*qDebug() << "[" << i << "," << j << "] 2\n";*/
             tmp = in->getGreenPixel(i-1, j) + in->getGreenPixel(i+1, j) + in->getGreenPixel(i, j-1) + in->getGreenPixel(i, j+1) - (4.0*in->getGreenPixel(i, j)) ;
             out->setGreenPixel(i, j, tmp);
-            /*qDebug() << "[" << i << "," << j << "] 3\n";*/
+
             tmp = in->getBluePixel(i-1, j) + in->getBluePixel(i+1, j) + in->getBluePixel(i, j-1) + in->getBluePixel(i, j+1) - (4.0*in->getBluePixel(i, j)) ;
             out->setBluePixel(i, j, tmp);
+            /*qDebug() << "[" << i << "," << j << "] LapBlue = " << tmp << "\n";*/
         }
     }
    /* qDebug() << "Fin Laplacien\n";*/
@@ -122,11 +123,34 @@ void CInpBase::appliquer(CImage *init, CImage *masque, CImage *out, float _lambd
 
     qDebug() << "Debut de CInpBase\n";
 
+    CImageDouble * masque_tmp = new CImageDouble(masque);
+    CImageDouble * init_tmp = new CImageDouble(init);
+
+    for (int y = 0; y < masque_tmp->height; ++y)
+    {
+        for (int x = 0; x < masque_tmp->width; ++x)
+        {
+            if (masque->getPixel(x, y) == qRgba(0, 0, 0, 255))
+            {
+                masque_tmp->setRedPixel(x, y, 0.0);
+                masque_tmp->setGreenPixel(x, y, 0.0);
+                masque_tmp->setBluePixel(x, y, 0.0);
+            }
+            else
+            {
+                masque_tmp->setRedPixel(x, y, 255.0);
+                masque_tmp->setGreenPixel(x, y, 255.0);
+                masque_tmp->setBluePixel(x, y, 255.0);
+            }
+        }
+    }
+
     CImageDouble *U1 = new CImageDouble(init);
     CImageDouble *U2 = new CImageDouble(init);
     CImageDouble *Lap = new CImageDouble(init);
 
-    while(dist > 0.05)
+    /*while(dist > 0.05)*/
+    for( int k = 0; k < 20; ++k)/*Pour tester car distance augemente constamment...*/
     {
         qDebug() << "1\n";
         Laplacien(U1, Lap);
@@ -135,11 +159,13 @@ void CInpBase::appliquer(CImage *init, CImage *masque, CImage *out, float _lambd
         {
             for(j = 0; j < H; ++j)
             {
-                temp = U1->getRedPixel(i, j)+_dt*(2.0*((double) (masque->getRedPixel(i, j))/255.)*((double) (init->getRedPixel(i, j))-U1->getRedPixel(i, j))+_lambda*Lap->getRedPixel(i, j));
+                temp = U1->getRedPixel(i, j)+_dt*(2.0*((masque_tmp->getRedPixel(i, j))/255.0)*((init_tmp->getRedPixel(i, j))- (U1->getRedPixel(i, j)))+_lambda*Lap->getRedPixel(i, j));
+                if (masque->getRedPixel(i, j) == 0.0)
+                    qDebug() << "iter: " <<k<< " |Ancienne valeur ["<<i<<','<<j<<"]: "<< U1->getRedPixel(i, j) << " Nouvelle valeur: " << temp << "\n";
                 U2->setRedPixel(i, j, temp);
-                temp = U1->getGreenPixel(i, j)+_dt*(2.0*((double) (masque->getGreenPixel(i, j))/255.)*((double) (init->getGreenPixel(i, j))-U1->getGreenPixel(i, j))+_lambda*Lap->getGreenPixel(i, j));
+                temp = U1->getGreenPixel(i, j)+_dt*(2.0*((masque_tmp->getGreenPixel(i, j))/255.0)*((init_tmp->getGreenPixel(i, j))- (U1->getGreenPixel(i, j)))+_lambda*Lap->getGreenPixel(i, j));
                 U2->setGreenPixel(i, j, temp);
-                temp = U1->getBluePixel(i, j)+_dt*(2.0*((double) (masque->getBluePixel(i, j))/255.)*((double) (init->getBluePixel(i, j))-U1->getBluePixel(i, j))+_lambda*Lap->getBluePixel(i, j));
+                temp = U1->getBluePixel(i, j)+_dt*(2.0*((masque_tmp->getBluePixel(i, j))/255.0)*((init_tmp->getBluePixel(i, j))- (U1->getBluePixel(i, j)))+_lambda*Lap->getBluePixel(i, j));
                 U2->setBluePixel(i, j, temp);
             }
         }
@@ -154,6 +180,8 @@ void CInpBase::appliquer(CImage *init, CImage *masque, CImage *out, float _lambd
     delete U1;
     delete U2;
     delete Lap;
+    delete masque_tmp;
+    delete init_tmp;
 }
 
 /**
