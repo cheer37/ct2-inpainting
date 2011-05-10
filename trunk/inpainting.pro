@@ -10,7 +10,6 @@ SOURCES += main.cpp \
     ctschumperle.cpp \
     cmgvc.cpp \
     cvector2f.cpp \
-    cmatrimage.cpp \
     chessian.cpp \
     cdifftensor.cpp \
     cimagedouble.cpp \
@@ -21,7 +20,6 @@ HEADERS += mainwindow.h \
     ctschumperle.h \
     cmgvc.h \
     cvector2f.h \
-    cmatrimage.h \
     chessian.h \
     cdifftensor.h \
     cimagedouble.h \
